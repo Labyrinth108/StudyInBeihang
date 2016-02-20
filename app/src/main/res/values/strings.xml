@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">学在北航</string>
+    <string name="menu_settings">Settings</string>
+    
+    <string name="tab_searchroom">"自习"</string>
+    <string name="tab_diningroom">"食堂"</string>
+    <string name="tab_recommend">"荐书"</string>
+    <string name="tab_info">"关于我们"</string>
+
+    <string name="title_searchroom">"自习"</string>
+    <string name="title_diningroom">"食堂"</string>
+    <string name="title_recommend">"荐书"</string>
+
+    <string name="back">"返回"</string>
+    <string name="help">"反馈"</string>
+    <string name="exit">"退出"</string>
+
+    <string name="rooms">"教室资源"</string>
+    <string name="title_details">"教室占用情况"</string>
+
+</resources>

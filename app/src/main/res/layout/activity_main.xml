@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@drawable/activity_bg"
+    android:orientation="vertical" >
+
+    <fragment
+        android:id="@+id/fragment_searchroom"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_weight="1"
+        class="com.example.sony.StudyInBeihang.SearchRoomFragment" />
+
+    <fragment
+        android:id="@+id/fragment_diningroom"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_weight="1"
+        class="com.example.sony.StudyInBeihang.DiningroomFragment" />
+
+    <fragment
+        android:id="@+id/fragment_recommend"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_weight="1"
+        class="com.example.sony.StudyInBeihang.RecommendFragment" />
+
+
+    <com.example.sony.StudyInBeihang.FragmentIndicator
+        android:id="@+id/indicator"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/tab_footer_bg" />
+
+</LinearLayout>
