@@ -1,20 +1,29 @@
 package com.example.sony.StudyInBeihang;
 
+import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
+
+import com.database.DB;
 import com.example.sony.StudyInBeihang.FragmentIndicator.OnIndicateListener;
+import com.service.LongRunningService;
 
 public class MainActivity extends FragmentActivity {
     public static Fragment[] mFragments;
+    private DB db;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_main);
         setFragmentIndicator(0);
+        db=DB.getInstance(this);
+        Intent intent=new Intent(this,LongRunningService.class);
+        startService(intent);
+
     }
 
     /**
@@ -48,5 +57,11 @@ public class MainActivity extends FragmentActivity {
     @Override
     protected void onPause() {
         super.onPause();
+    }
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Intent intent=new Intent(this,LongRunningService.class);
+        stopService(intent);
     }
 }

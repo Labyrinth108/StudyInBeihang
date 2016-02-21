@@ -1,4 +1,12 @@
 package com.examples.sony.util;
+import android.text.TextUtils;
+import android.util.Log;
+
+import com.database.Classroom;
+import com.database.DB;
+
+import org.json.JSONObject;
+
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -14,6 +22,7 @@ public class HttpUtil {
         new Thread(new Runnable() {
             @Override
             public void run() {
+                //Log.d("LongRunning","sendHTTP");
                 HttpURLConnection connection=null;
                 try{
                     URL url=new URL(address);
@@ -29,8 +38,7 @@ public class HttpUtil {
                     StringBuilder response=new StringBuilder();
                     String line;
                     while((line=reader.readLine())!=null)
-                        response.append(line);
-
+                      response.append(line);
                    if(listener!=null){
                        listener.onFinish(response.toString());
                    }
@@ -43,5 +51,31 @@ public class HttpUtil {
                 }
             }
         }).start();
+    }
+    public static boolean parseJSONWithJSONObject(DB db, String response){
+        if(!TextUtils.isEmpty(response)){
+            try{
+                JSONObject jsonObject=new JSONObject(response);
+                Classroom cr=new Classroom();
+                String location="";
+                switch (jsonObject.getString("location")){
+                    case "新主楼": location="NMB";break;
+                    case "主M":location="ZhuM";break;
+                    default:break;
+                }
+                cr.setLocation(location);
+                cr.setRoom(jsonObject.getString("room"));
+                cr.setIdnum(Integer.parseInt(jsonObject.getString("idnum")));
+                cr.setPercent(jsonObject.getString("percent"));
+                db.saveClassroom(cr);
+                return true;
+
+            }catch (Exception e){
+                e.printStackTrace();
+            }finally{
+
+            }
+        }
+    return false;
     }
 }
