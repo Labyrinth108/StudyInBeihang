@@ -56,14 +56,22 @@ public class SearchRoomFragment extends Fragment{
             @Override
             public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
                                     long arg3) {
-//                switch (arg2)
-//                {
-//                    case 1:
-//                }
-                if (arg2 == 2) {
-                    Intent intent = new Intent(getActivity(), details.class);
-                    getActivity().startActivity(intent);
+                Intent intent = new Intent(getActivity(), details.class);
+                Bundle bundle=new Bundle();
+                switch (arg2)
+                {
+                    //building对应的字段是数据库中对应的location的字段。
+                    case 0:bundle.putString("building", "NMB");break;
+                    case 1:bundle.putString("building", "ZhuM");break;
+                    case 2:bundle.putString("building", "XYLib");break;
+                    case 3:bundle.putString("building","J3");break;
+                    case 4:bundle.putString("building","J4");break;
+                    case 5:bundle.putString("building","J5");break;
+                    case 6:bundle.putString("building","ShaheLib");break;
+                    default:break;
                 }
+                intent.putExtras(bundle);
+                getActivity().startActivity(intent);
             }
         });
         return view;
@@ -74,6 +82,11 @@ public class SearchRoomFragment extends Fragment{
         Map<String, Object> map = new HashMap<String, Object>();
         map.put("title", "新主楼");
         map.put("img", R.drawable.newmainbuilding);
+        list.add(map);
+
+        map = new HashMap<String, Object>();
+        map.put("title", "主M");
+        map.put("img", R.drawable.xueyuanlibrary);
         list.add(map);
 
         map = new HashMap<String, Object>();

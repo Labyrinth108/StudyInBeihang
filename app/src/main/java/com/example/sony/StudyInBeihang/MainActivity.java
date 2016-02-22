@@ -21,9 +21,6 @@ public class MainActivity extends FragmentActivity {
         setContentView(R.layout.activity_main);
         setFragmentIndicator(0);
         db=DB.getInstance(this);
-        Intent intent=new Intent(this,LongRunningService.class);
-        startService(intent);
-
     }
 
     /**

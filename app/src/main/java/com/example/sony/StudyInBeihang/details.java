@@ -1,7 +1,9 @@
 package com.example.sony.StudyInBeihang;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -28,13 +30,17 @@ import java.util.ArrayList;
  */
 public class details extends Activity {
     private TitleView mTitle;
-    private DB db;
+    private String building;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.details);
+
+        Intent intent = this.getIntent();        //获取已有的intent对象
+        Bundle bundle = intent.getExtras();    //获取intent里面的bundle对象
+        building = bundle.getString("building");    //获取Bundle里面的字符串
 
         mTitle = (TitleView) findViewById(R.id.title);
         mTitle.setTitle(R.string.title_details);
@@ -53,7 +59,7 @@ public class details extends Activity {
         BarChart chart = (BarChart) findViewById(R.id.chart);
         BarData data = new BarData(getXAxisValues(), getDataSet());
         chart.setData(data);
-        chart.setDescription("J3");
+        chart.setDescription(building);
         chart.animateXY(2000, 2000);//动画时间
         chart.invalidate();
     }
@@ -64,37 +70,35 @@ public class details extends Activity {
         return Float.parseFloat(p);
     }
 
-        private ArrayList<BarDataSet> getDataSet() {
+    private ArrayList<BarDataSet> getDataSet() {
 
-            ArrayList<BarDataSet> dataSets = new ArrayList<BarDataSet>();
-            for (int index=1;index<=4;index++){
-                ArrayList<BarEntry> valueSet = new ArrayList<>();
-
-                int r;
-                //计算101室，201室，301室，401室
-                for(int i=0;i<4;i++)
-                {
-                    r=(i+1)*100+index;
-                    float f=queryClassroom("NMB",101+"");
-                    //float f=queryClassroom("NMB",r+"");
-                    BarEntry bn=new BarEntry(f ,i);
-                    valueSet.add(bn);
-                }
-                BarDataSet barDataSet = new BarDataSet(valueSet, "x0"+index+"室");
-                barDataSet.setColor(ColorTemplate.COLORFUL_COLORS[index-1]);
-                dataSets.add(barDataSet);
+        ArrayList<BarDataSet> dataSets = new ArrayList<BarDataSet>();
+        for (int index=1;index<=4;index++){
+            ArrayList<BarEntry> valueSet = new ArrayList<>();
+            int r;
+            //计算101室，201室，301室，401室
+            for(int i=0;i<4;i++)
+            {
+                r=(i+1)*100+index;
+                float f=queryClassroom(building,r+"");
+                BarEntry bn=new BarEntry(f ,i);
+                valueSet.add(bn);
             }
-            return dataSets;
+            BarDataSet barDataSet = new BarDataSet(valueSet, "x0"+index+"室");
+            barDataSet.setColor(ColorTemplate.COLORFUL_COLORS[index-1]);
+            dataSets.add(barDataSet);
         }
+        return dataSets;
+    }
 
-        private ArrayList<String> getXAxisValues() {
-            ArrayList<String> xAxis = new ArrayList<>();
-            xAxis.add("J3-1楼");
-            xAxis.add("J3-2楼");
-            xAxis.add("J3-3楼");
-            xAxis.add("J3-4楼");
-            return xAxis;
-        }
+    private ArrayList<String> getXAxisValues() {
+        ArrayList<String> xAxis = new ArrayList<>();
+        xAxis.add("1楼");
+        xAxis.add("2楼");
+        xAxis.add("3楼");
+        xAxis.add("4楼");
+        return xAxis;
+    }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.

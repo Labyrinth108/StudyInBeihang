@@ -4,10 +4,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.util.Log;
 
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by SONY on 2016/2/20.
@@ -36,6 +33,12 @@ public class DB {
             values.put("idnum", classroom.getIdnum());
             values.put("percent", classroom.getPercent());
             db.insert("Classroom", null, values);
+        }
+    }
+    public void updateClassroom(Classroom classroom){
+        if (classroom != null) {
+            db.execSQL("update Classroom set percent=? where location=? and room=?",
+                    new String[]{classroom.getPercent(),classroom.getLocation(),classroom.getRoom()});
         }
     }
     //从数据库中读取教室信息
