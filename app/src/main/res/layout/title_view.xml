@@ -2,24 +2,23 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="50dip"
-    android:background="@drawable/title_bg"
+    android:background="@drawable/tab_footer"
     android:orientation="horizontal" >
-
     <Button
         android:id="@+id/left_btn"
         style="@style/Text.Title_Button"
         android:layout_width="wrap_content"
         android:layout_height="35dip"
         android:layout_gravity="center_vertical"
-        android:background="@drawable/title_btn_back"
-        android:minWidth="60dip" />
+        android:background="@drawable/back2"
+        android:minWidth="50dip" />
 
     <TextView
         android:id="@+id/title_text"
         style="@style/Text.Title"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical"
+        android:layout_gravity="center_vertical|center_horizontal"
         android:layout_weight="1" />
 
     <Button
@@ -28,7 +27,7 @@
         android:layout_width="wrap_content"
         android:layout_height="35dip"
         android:layout_gravity="center_vertical"
-        android:background="@drawable/title_btn"
-        android:minWidth="70dip" />
+        android:background="@drawable/letter"
+        android:minWidth="50dip" />
 
 </LinearLayout>

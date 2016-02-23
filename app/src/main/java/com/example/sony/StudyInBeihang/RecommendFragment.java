@@ -51,20 +51,6 @@ public class RecommendFragment extends Fragment {
 
 		mTitle = (TitleView) mParent.findViewById(R.id.title);
 		mTitle.setTitle(R.string.title_recommend);
-		mTitle.setLeftButton(R.string.back, new OnLeftButtonClickListener() {
-
-			@Override
-			public void onClick(View button) {
-				backHomeFragment();
-			}
-		});
-//		mTitle.setRightButton(R.string.help, new OnRightButtonClickListener() {
-//
-//			@Override
-//			public void onClick(View button) {
-////				goHelp();
-//			}
-//		});
 	}
 
 	private void backHomeFragment() {

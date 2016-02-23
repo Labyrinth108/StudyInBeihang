@@ -127,15 +127,7 @@ public class SearchRoomFragment extends Fragment{
 
         mTitle = (TitleView) mParent.findViewById(R.id.title);
         mTitle.setTitle(R.string.title_searchroom);
-        mTitle.setLeftButton(R.string.exit, new OnLeftButtonClickListener() {
-
-            @Override
-            public void onClick(View button) {
-                mActivity.finish();
-            }
-
-        });
-        mTitle.setRightButton(R.string.help, new OnRightButtonClickListener() {
+        mTitle.setRightButton("", new OnRightButtonClickListener() {
 
             @Override
             public void onClick(View button) {

@@ -1,7 +1,10 @@
 package com.example.sony.StudyInBeihang;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.PointF;
+import android.graphics.RectF;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -15,9 +18,13 @@ import com.database.DB;
 import com.examples.sony.util.HttpCallbackListener;
 import com.examples.sony.util.HttpUtil;
 import com.github.mikephil.charting.charts.BarChart;
+import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
+import com.github.mikephil.charting.data.Entry;
+import com.github.mikephil.charting.highlight.Highlight;
+import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
 import com.github.mikephil.charting.utils.ColorTemplate;
 import com.github.mikephil.charting.utils.Utils;
 
@@ -28,10 +35,10 @@ import java.util.ArrayList;
 /**
  * Created by SONY on 2016/1/17.
  */
-public class details extends Activity {
+public class details extends Activity implements OnChartValueSelectedListener {
     private TitleView mTitle;
     private String building;
-
+    private BarChart chart;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,17 +57,18 @@ public class details extends Activity {
 
             }
         });
-        mTitle.setLeftButton(R.string.back, new TitleView.OnLeftButtonClickListener() {
-            @Override
-            public void onClick(View button) {
-
-            }
-        });
-        BarChart chart = (BarChart) findViewById(R.id.chart);
+//        mTitle.setLeftButton(R.string.back, new TitleView.OnLeftButtonClickListener() {
+//            @Override
+//            public void onClick(View button) {
+//
+//            }
+//        });
+        chart = (BarChart) findViewById(R.id.chart);
         BarData data = new BarData(getXAxisValues(), getDataSet());
         chart.setData(data);
         chart.setDescription(building);
         chart.animateXY(2000, 2000);//动画时间
+        chart.setOnChartValueSelectedListener(this);
         chart.invalidate();
     }
 
@@ -105,6 +113,27 @@ public class details extends Activity {
         getMenuInflater().inflate(R.menu.menu_main, menu);
 
         return true;
+    }
+
+    public void onValueSelected(Entry e, int dataSetIndex, Highlight h) {
+
+        if (e == null)
+            return;
+        RectF bounds = chart.getBarBounds((BarEntry) e);
+        PointF position = chart.getPosition(e, YAxis.AxisDependency.LEFT);
+        Intent intent=new Intent(this,RoomInfo.class);
+        Bundle b=new Bundle();
+        int room=(h.getXIndex()+1)*100+dataSetIndex+1;
+        b.putInt("Classroom",room);
+        b.putString("Building",building);
+        b.putFloat("Percent",e.getVal());
+        intent.putExtras(b);
+        startActivity(intent);
+    }
+
+    @Override
+    public void onNothingSelected() {
+
     }
 
     @Override

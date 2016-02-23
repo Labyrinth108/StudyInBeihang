@@ -3,26 +3,19 @@
     android:orientation="horizontal"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:background="@drawable/listviewitembg">
+    >
 
     <ImageView android:id="@+id/img"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="30px"/>
+        android:layout_margin="15px"/>
 
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center">
         <TextView android:id="@+id/title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="40px"
             android:layout_gravity="center_horizontal"
-            android:textColor="@android:color/white"
-            android:textStyle="bold"
+            android:textColor="@android:color/black"
             android:layout_centerInParent="true" />
-    </LinearLayout>
 
 </LinearLayout>

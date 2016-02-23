@@ -50,20 +50,7 @@ public class DiningroomFragment extends Fragment {
 
 		mTitle = (TitleView) mParent.findViewById(R.id.title);
 		mTitle.setTitle(R.string.title_diningroom);
-		mTitle.setLeftButton(R.string.back, new OnLeftButtonClickListener() {
 
-			@Override
-			public void onClick(View button) {
-				backHomeFragment();
-			}
-		});
-//		mTitle.setRightButton(R.string.help, new OnRightButtonClickListener() {
-//
-//			@Override
-//			public void onClick(View button) {
-////				goHelp();
-//			}
-//		});
 	}
 
 	private void backHomeFragment() {
