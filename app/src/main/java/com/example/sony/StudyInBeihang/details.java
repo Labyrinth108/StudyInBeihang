@@ -51,12 +51,12 @@ public class details extends Activity implements OnChartValueSelectedListener {
 
         mTitle = (TitleView) findViewById(R.id.title);
         mTitle.setTitle(R.string.title_details);
-        mTitle.setRightButton(R.string.rooms, new TitleView.OnRightButtonClickListener() {
-            @Override
-            public void onClick(View button) {
-
-            }
-        });
+//        mTitle.setRightButton(R.string.rooms, new TitleView.OnRightButtonClickListener() {
+//            @Override
+//            public void onClick(View button) {
+//
+//            }
+//        });
 //        mTitle.setLeftButton(R.string.back, new TitleView.OnLeftButtonClickListener() {
 //            @Override
 //            public void onClick(View button) {

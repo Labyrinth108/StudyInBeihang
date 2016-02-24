@@ -18,12 +18,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-
+//自习fragment
 public class SearchRoomFragment extends Fragment{
     private View mParent;
     private FragmentActivity mActivity;
     private TitleView mTitle;
-    private TextView mText;
 
     /**
      * Create a new instance of DetailsFragment, initialized to show the text at
@@ -127,6 +126,13 @@ public class SearchRoomFragment extends Fragment{
 
         mTitle = (TitleView) mParent.findViewById(R.id.title);
         mTitle.setTitle(R.string.title_searchroom);
+
+        mTitle.setLeftButton("", new OnLeftButtonClickListener() {
+            @Override
+            public void onClick(View button) {
+                mActivity.finish();
+            }
+        });
         mTitle.setRightButton("", new OnRightButtonClickListener() {
 
             @Override

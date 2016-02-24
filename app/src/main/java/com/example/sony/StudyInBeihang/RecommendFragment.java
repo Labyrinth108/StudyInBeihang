@@ -8,7 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.sony.StudyInBeihang.TitleView.OnLeftButtonClickListener;
-
+//荐书fragment
 public class RecommendFragment extends Fragment {
 
 	private View mParent;

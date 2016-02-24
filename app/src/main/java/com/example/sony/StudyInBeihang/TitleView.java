@@ -12,11 +12,11 @@ import android.widget.TextView;
  */
 public class TitleView extends FrameLayout implements View.OnClickListener {
 
-   // private Button mLeftBtn;
+    private Button mLeftBtn;
     private Button mRightBtn;
     private TextView mTitle;
 
-  //  private OnLeftButtonClickListener mOnLeftButtonClickListener;
+    private OnLeftButtonClickListener mOnLeftButtonClickListener;
     private OnRightButtonClickListener mOnRightButtonClickListener;
 
     public interface OnLeftButtonClickListener {
@@ -27,31 +27,31 @@ public class TitleView extends FrameLayout implements View.OnClickListener {
         public void onClick(View button);
     }
 
-//    public void setLeftButton(String text, OnLeftButtonClickListener listener) {
-//        mLeftBtn.setText(text);
-//        mLeftBtn.setVisibility(View.VISIBLE);
-//        mOnLeftButtonClickListener = listener;
-//    }
+    public void setLeftButton(String text, OnLeftButtonClickListener listener) {
+        mLeftBtn.setText(text);
+        mLeftBtn.setVisibility(View.VISIBLE);
+        mOnLeftButtonClickListener = listener;
+    }
 
-//    public void setLeftButton(int stringID, OnLeftButtonClickListener listener) {
-//        mLeftBtn.setText(stringID);
-//        mLeftBtn.setVisibility(View.VISIBLE);
-//        mOnLeftButtonClickListener = listener;
-//    }
+    public void setLeftButton(int stringID, OnLeftButtonClickListener listener) {
+        mLeftBtn.setText(stringID);
+        mLeftBtn.setVisibility(View.VISIBLE);
+        mOnLeftButtonClickListener = listener;
+    }
 
-//    public void removeLeftButton() {
-//        mLeftBtn.setText("");
-//        mLeftBtn.setVisibility(View.INVISIBLE);
-//        mOnLeftButtonClickListener = null;
-//    }
+    public void removeLeftButton() {
+        mLeftBtn.setText("");
+        mLeftBtn.setVisibility(View.INVISIBLE);
+        mOnLeftButtonClickListener = null;
+    }
 
-//    public void hiddenLeftButton() {
-//        mLeftBtn.setVisibility(View.INVISIBLE);
-//    }
-//
-//    public void showLeftButton() {
-//        mLeftBtn.setVisibility(View.VISIBLE);
-//    }
+    public void hiddenLeftButton() {
+        mLeftBtn.setVisibility(View.INVISIBLE);
+    }
+
+    public void showLeftButton() {
+        mLeftBtn.setVisibility(View.VISIBLE);
+    }
 
     public void setRightButton(String text, OnRightButtonClickListener listener) {
         mRightBtn.setText(text);
@@ -98,6 +98,10 @@ public class TitleView extends FrameLayout implements View.OnClickListener {
         mRightBtn.setVisibility(View.INVISIBLE);
         mRightBtn.setOnClickListener(this);
 
+        mLeftBtn = (Button) findViewById(R.id.left_btn);
+        mLeftBtn.setVisibility(View.INVISIBLE);
+        mLeftBtn.setOnClickListener(this);
+
         mTitle = (TextView) findViewById(R.id.title_text);
         mTitle.setVisibility(View.INVISIBLE);
     }
@@ -115,10 +119,10 @@ public class TitleView extends FrameLayout implements View.OnClickListener {
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-//            case R.id.left_btn:
-//                if(mOnLeftButtonClickListener != null)
-//                    mOnLeftButtonClickListener.onClick(v);
-//                break;
+            case R.id.left_btn:
+                if(mOnLeftButtonClickListener != null)
+                    mOnLeftButtonClickListener.onClick(v);
+                break;
             case R.id.right_btn:
                 if(mOnRightButtonClickListener != null)
                     mOnRightButtonClickListener.onClick(v);
