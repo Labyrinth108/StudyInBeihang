@@ -76,19 +76,19 @@ public class FragmentIndicator extends LinearLayout implements OnClickListener {
 
     private void init() {
         mIndicators = new View[3];
-        mIndicators[0] = createIndicator(R.drawable.search,
+        mIndicators[0] = createIndicator(R.drawable.search_select,
                 R.string.tab_searchroom, COLOR_SELECT, TAG_ICON_0, TAG_TEXT_0);
         mIndicators[0].setBackgroundResource(R.drawable.button_select);//选中的颜色
         mIndicators[0].setTag(Integer.valueOf(0));
         mIndicators[0].setOnClickListener(this);
         addView(mIndicators[0]);
-        mIndicators[1] = createIndicator(R.drawable.dining,
+        mIndicators[1] = createIndicator(R.drawable.dining_unselect,
                 R.string.tab_diningroom, COLOR_UNSELECT, TAG_ICON_1, TAG_TEXT_1);
         mIndicators[1].setBackgroundColor(Color.alpha(0));
         mIndicators[1].setTag(Integer.valueOf(1));
         mIndicators[1].setOnClickListener(this);
         addView(mIndicators[1]);
-        mIndicators[2] = createIndicator(R.drawable.booknew,
+        mIndicators[2] = createIndicator(R.drawable.book_unselect,
                 R.string.tab_recommend, COLOR_UNSELECT, TAG_ICON_2, TAG_TEXT_2);
         mIndicators[2].setBackgroundColor(Color.alpha(0));
         mIndicators[2].setTag(Integer.valueOf(2));
@@ -104,19 +104,19 @@ public class FragmentIndicator extends LinearLayout implements OnClickListener {
         switch(mCurIndicator) {
             case 0:
                 prevIcon =(ImageView) mIndicators[mCurIndicator].findViewWithTag(TAG_ICON_0);
-                prevIcon.setImageResource(R.drawable.search);
+                prevIcon.setImageResource(R.drawable.search_unselect);
                 prevText = (TextView) mIndicators[mCurIndicator].findViewWithTag(TAG_TEXT_0);
                 prevText.setTextColor(COLOR_UNSELECT);
                 break;
             case 1:
                 prevIcon =(ImageView) mIndicators[mCurIndicator].findViewWithTag(TAG_ICON_1);
-                prevIcon.setImageResource(R.drawable.dining);
+                prevIcon.setImageResource(R.drawable.dining_unselect);
                 prevText = (TextView) mIndicators[mCurIndicator].findViewWithTag(TAG_TEXT_1);
                 prevText.setTextColor(COLOR_UNSELECT);
                 break;
             case 2:
                 prevIcon =(ImageView) mIndicators[mCurIndicator].findViewWithTag(TAG_ICON_2);
-                prevIcon.setImageResource(R.drawable.booknew);
+                prevIcon.setImageResource(R.drawable.book_unselect);
                 prevText = (TextView) mIndicators[mCurIndicator].findViewWithTag(TAG_TEXT_2);
                 prevText.setTextColor(COLOR_UNSELECT);
                 break;
@@ -129,19 +129,19 @@ public class FragmentIndicator extends LinearLayout implements OnClickListener {
         switch(which) {
             case 0:
                 currIcon =(ImageView) mIndicators[which].findViewWithTag(TAG_ICON_0);
-                currIcon.setImageResource(R.drawable.search);
+                currIcon.setImageResource(R.drawable.search_select);
                 currText = (TextView) mIndicators[which].findViewWithTag(TAG_TEXT_0);
                 currText.setTextColor(COLOR_SELECT);
                 break;
             case 1:
                 currIcon =(ImageView) mIndicators[which].findViewWithTag(TAG_ICON_1);
-                currIcon.setImageResource(R.drawable.dining);
+                currIcon.setImageResource(R.drawable.dining_select);
                 currText = (TextView) mIndicators[which].findViewWithTag(TAG_TEXT_1);
                 currText.setTextColor(COLOR_SELECT);
                 break;
             case 2:
                 currIcon =(ImageView) mIndicators[which].findViewWithTag(TAG_ICON_2);
-                currIcon.setImageResource(R.drawable.booknew);
+                currIcon.setImageResource(R.drawable.book_select);
                 currText = (TextView) mIndicators[which].findViewWithTag(TAG_TEXT_2);
                 currText.setTextColor(COLOR_SELECT);
                 break;
