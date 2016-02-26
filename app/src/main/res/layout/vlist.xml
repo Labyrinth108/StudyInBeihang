@@ -13,9 +13,11 @@
         <TextView android:id="@+id/title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="40px"
             android:layout_gravity="center_horizontal"
-            android:textColor="@android:color/black"
-            android:layout_centerInParent="true" />
+            android:textColor="@color/listcolor"
+            android:textSize="18.0sp"
+            android:layout_centerInParent="true"
+            android:allowUndo="false"
+            style="@style/Base.Widget.AppCompat.ListView" />
 
 </LinearLayout>

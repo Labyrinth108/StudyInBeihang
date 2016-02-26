@@ -3,6 +3,7 @@ package com.example.sony.StudyInBeihang;
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.view.View;
 import android.view.Window;
 
 public class HelpActivity extends Activity {
@@ -15,6 +16,12 @@ public class HelpActivity extends Activity {
 
 		TitleView tv=(TitleView)findViewById(R.id.title);
 		tv.setTitle("反馈");
+		tv.setLeftButton("", new TitleView.OnLeftButtonClickListener() {
+			@Override
+			public void onClick(View button) {
+				finish();
+			}
+		});
 	}
 
 }

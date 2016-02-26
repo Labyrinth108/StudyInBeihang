@@ -2,4 +2,6 @@
 <resources>
     <color name="background_color">#ffdbdada</color>
     <color name="white">#ffffffff</color>
+    <color name="listcolor">#4c566c</color>
+
 </resources>
