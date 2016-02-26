@@ -3,7 +3,7 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:orientation="vertical"
-    android:background="@drawable/bg">
+    android:background="@color/background_color">
 
     <com.example.sony.StudyInBeihang.TitleView
         android:id="@+id/title"
@@ -12,12 +12,15 @@
         />
 
     <ListView
+        android:id="@+id/lv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:listSelector="#00000000"
         android:fadingEdge="none"
-        android:id="@+id/lv"
-        android:divider="#FFFF"
+        android:layout_margin="5.0dp"
+        android:background="@color/white"
+        android:dividerHeight="2.0dp"
+        android:divider="@color/background_color"
         >
     </ListView>
 </LinearLayout>

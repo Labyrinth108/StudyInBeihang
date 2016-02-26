@@ -19,5 +19,7 @@
 
     <string name="rooms">"教室资源"</string>
     <string name="title_details">"教室占用情况"</string>
+    <string name="feedback_content_hint">"请输入您的反馈意见"</string>
+    <string name="feedback_contact_hint">"请输入您的联系方式：邮箱/手机号/QQ"</string>
 
 </resources>

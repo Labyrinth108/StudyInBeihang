@@ -133,7 +133,7 @@ public class SearchRoomFragment extends Fragment{
                 mActivity.finish();
             }
         });
-        mTitle.setRightButton("", new OnRightButtonClickListener() {
+        mTitle.setRightButton("反馈", new OnRightButtonClickListener() {
 
             @Override
             public void onClick(View button) {
