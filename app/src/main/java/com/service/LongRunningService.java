@@ -1,19 +1,23 @@
 package com.service;
 
 import android.app.AlarmManager;
+import android.app.AlertDialog;
 import android.app.PendingIntent;
 import android.app.Service;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.os.SystemClock;
 import android.support.annotation.Nullable;
 import android.util.Log;
+import android.view.View;
 import android.widget.Toast;
 
 import com.database.DB;
 import com.database.StudyInBeihangOpenHelper;
 import com.example.sony.StudyInBeihang.MainActivity;
+import com.example.sony.StudyInBeihang.R;
 import com.example.sony.StudyInBeihang.SearchRoomFragment;
 import com.example.sony.StudyInBeihang.details;
 import com.examples.sony.util.HttpCallbackListener;
@@ -50,7 +54,7 @@ public class LongRunningService extends Service {
 
         AlarmManager manager=(AlarmManager)getSystemService(ALARM_SERVICE);
         int aMinute=60*60*1000;
-        long triggerAtTime= SystemClock.elapsedRealtime()+5*aMinute;
+        long triggerAtTime= SystemClock.elapsedRealtime()+10*aMinute;
         Intent i=new Intent(this, AlarmReceiver.class);
         Bundle b=new Bundle();
         b.putBoolean("First", false);
@@ -76,18 +80,17 @@ public class LongRunningService extends Service {
                     Log.d("LongRunning", location+"ok");
                 }
                 else{
-                    Log.d("LongRunning",location+"getRealData not ok!");
+
                 }
             }
 
             @Override
             public void onError(Exception e) {
-//                runOnUiThread(new Runnable() {
-//                    @Override
-//                    public void run() {
-//                        Toast.makeText(details.this, "加载失败！", Toast.LENGTH_LONG).show();
-//                    }
-//                });
+//                Intent intent=new Intent(LongRunningService.this,MainActivity.class);
+//                Bundle b=new Bundle();
+//                b.putString("Error","yes");
+//                startActivity(intent);
+
             }
         });
     }

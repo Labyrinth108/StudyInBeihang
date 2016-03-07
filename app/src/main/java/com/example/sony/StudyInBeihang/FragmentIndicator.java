@@ -64,7 +64,7 @@ public class FragmentIndicator extends LinearLayout implements OnClickListener {
         textView.setLayoutParams(new LinearLayout.LayoutParams(
                 LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT, 1));
         textView.setTextColor(stringColor);
-        textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);
+        textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14);
         textView.setText(stringResID);
 
         view.addView(iconView);
@@ -78,7 +78,7 @@ public class FragmentIndicator extends LinearLayout implements OnClickListener {
         mIndicators = new View[3];
         mIndicators[0] = createIndicator(R.drawable.search_select,
                 R.string.tab_searchroom, COLOR_SELECT, TAG_ICON_0, TAG_TEXT_0);
-        mIndicators[0].setBackgroundResource(R.drawable.button_select);//选中的颜色
+       // mIndicators[0].setBackgroundResource(R.drawable.indic_select);//选中的颜色
         mIndicators[0].setTag(Integer.valueOf(0));
         mIndicators[0].setOnClickListener(this);
         addView(mIndicators[0]);
@@ -94,6 +94,7 @@ public class FragmentIndicator extends LinearLayout implements OnClickListener {
         mIndicators[2].setTag(Integer.valueOf(2));
         mIndicators[2].setOnClickListener(this);
         addView(mIndicators[2]);
+
     }
 
     public static void setIndicator(int which) {
@@ -123,7 +124,7 @@ public class FragmentIndicator extends LinearLayout implements OnClickListener {
         }
 
         // update current status.
-        mIndicators[which].setBackgroundResource(R.drawable.button_select);
+        //mIndicators[which].setBackgroundResource(R.drawable.indic_select);
         ImageView currIcon;
         TextView currText;
         switch(which) {

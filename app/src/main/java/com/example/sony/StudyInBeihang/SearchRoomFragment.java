@@ -85,12 +85,12 @@ public class SearchRoomFragment extends Fragment{
 
         map = new HashMap<String, Object>();
         map.put("title", "主M");
-        map.put("img", R.drawable.xueyuanlibrary);
+        map.put("img", R.drawable.zm);
         list.add(map);
 
         map = new HashMap<String, Object>();
         map.put("title", "学院路图书馆");
-        map.put("img", R.drawable.xueyuanlibrary);
+        map.put("img", R.drawable.xueyuanlib);
         list.add(map);
 
         map = new HashMap<String, Object>();
