@@ -1,5 +1,6 @@
 package com.example.sony.StudyInBeihang;
 
+import android.app.FragmentManager;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.PointF;
@@ -15,6 +16,7 @@ import android.view.MenuItem;
 import android.view.Window;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.database.DB;
@@ -119,12 +121,11 @@ public class details extends FragmentActivity{
         mFragmentList.add(secondFloorFg);
         mFragmentList.add(thirdFloorFg);
 
-
         mFragmentAdapter = new FragmentAdapter(
                 this.getSupportFragmentManager(), mFragmentList);
         mPageVp.setAdapter(mFragmentAdapter);
         mPageVp.setCurrentItem(0);
-
+        //mPageVp.addOnPageChangeListener(this);
         mPageVp.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
 
             /**

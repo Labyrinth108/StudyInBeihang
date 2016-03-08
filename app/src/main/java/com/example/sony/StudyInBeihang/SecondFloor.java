@@ -1,5 +1,6 @@
 package com.example.sony.StudyInBeihang;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.PointF;
 import android.graphics.RectF;
@@ -29,7 +30,7 @@ import java.util.ArrayList;
 public class SecondFloor extends Fragment implements OnChartValueSelectedListener {
 	private BarChart chart;
 	private View view;
-	private String building;
+	private String building="NMB";
 	@Override
 	public View onCreateView(LayoutInflater inflater,ViewGroup container,Bundle savedInstanceState){
 		super.onCreateView(inflater, container, savedInstanceState);
@@ -42,10 +43,7 @@ public class SecondFloor extends Fragment implements OnChartValueSelectedListene
 		chart.setOnChartValueSelectedListener(this);
 		chart.invalidate();
 		return view;
-		
-		
 	}
-	
 	
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState){
@@ -55,8 +53,6 @@ public class SecondFloor extends Fragment implements OnChartValueSelectedListene
 	private float queryClassroom(String location,String room){
 		DB db=new DB(getActivity());
 		String p=db.loadClassroom(location,room);
-
-//        }
 		return Float.parseFloat(p);
 	}
 
@@ -97,29 +93,14 @@ public class SecondFloor extends Fragment implements OnChartValueSelectedListene
 		RectF bounds = chart.getBarBounds((BarEntry) e);
 		PointF position = chart.getPosition(e, YAxis.AxisDependency.LEFT);
 		Bundle b=new Bundle();
-		int room=(h.getXIndex()+1)*100+dataSetIndex+1;
+		int room=(h.getXIndex()+1)*200+dataSetIndex+1;
 		b.putInt("Classroom", room);
 		b.putString("Building", building);
 		b.putFloat("Percent", e.getVal());
 		Log.d("Long", room + " " + building + ' ' + e.getVal());
-		RoomInfofg RoomFragment=new RoomInfofg();
-		RoomFragment.setArguments(b);
-		FragmentManager manager=getFragmentManager();
-		FragmentTransaction ft;
-		ft = manager.beginTransaction();
-		ft.replace(R.id.fg, RoomFragment);
-
-		//ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
-		ft.addToBackStack(null);
-		ft.commit();
-//		Intent intent=new Intent(getActivity(),RoomInfo.class);
-//		Bundle b=new Bundle();
-//		int room=(h.getXIndex()+1)*100+dataSetIndex+1;
-//		b.putInt("Classroom",room);
-//		b.putString("Building",building);
-//		b.putFloat("Percent",e.getVal());
-//		intent.putExtras(b);
-//		startActivity(intent);
+		Intent i=new Intent(getActivity(),RoomInfo.class);
+		i.putExtras(b);
+		startActivity(i);
 	}
 
 	@Override

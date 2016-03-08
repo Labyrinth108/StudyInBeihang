@@ -1,5 +1,6 @@
 package com.example.sony.StudyInBeihang;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.PointF;
 import android.graphics.RectF;
@@ -34,8 +35,10 @@ public class FirstFloor extends Fragment implements OnChartValueSelectedListener
 	@Override
 	public View onCreateView(LayoutInflater inflater,ViewGroup container,Bundle savedInstanceState){
 		super.onCreateView(inflater, container, savedInstanceState);
+
 		view = inflater.inflate(R.layout.viewpager, container, false);
 		chart = (BarChart)view.findViewById(R.id.chart);
+
         BarData data = new BarData(getXAxisValues(), getDataSet());
         chart.setData(data);
         //chart.setDescription(building);
@@ -96,16 +99,19 @@ public class FirstFloor extends Fragment implements OnChartValueSelectedListener
 		b.putString("Building", building);
 		b.putFloat("Percent", e.getVal());
 		Log.d("Long", room + " " + building + ' ' + e.getVal());
-		RoomInfofg RoomFragment=new RoomInfofg();
-		RoomFragment.setArguments(b);
-		FragmentManager manager=getFragmentManager();
-		FragmentTransaction ft;
-		ft = manager.beginTransaction();
-		ft.replace(R.id.fg, RoomFragment);
-
-		//ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
-		ft.addToBackStack(null);
-		ft.commit();
+		Intent i=new Intent(getActivity(),RoomInfo.class);
+		i.putExtras(b);
+		startActivity(i);
+//		RoomInfofg RoomFragment=new RoomInfofg();
+//		RoomFragment.setArguments(b);
+//		FragmentManager manager=getFragmentManager();
+//		FragmentTransaction ft;
+//		ft = manager.beginTransaction();
+//		ft.addToBackStack(null);
+//		ft.replace(R.id.fg, RoomFragment);
+//		//ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+//
+//		ft.commit();
 //		Intent intent=new Intent(getActivity(),RoomInfo.class);
 //		Bundle b=new Bundle();
 //		int room=(h.getXIndex()+1)*100+dataSetIndex+1;

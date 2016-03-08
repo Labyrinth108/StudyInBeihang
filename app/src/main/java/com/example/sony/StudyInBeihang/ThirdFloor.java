@@ -109,28 +109,20 @@ public class ThirdFloor extends Fragment implements OnChartValueSelectedListener
 		RectF bounds = chart.getBarBounds((BarEntry) e);
 		PointF position = chart.getPosition(e, YAxis.AxisDependency.LEFT);
 		Bundle b=new Bundle();
-		int room=(h.getXIndex()+1)*100+dataSetIndex+1;
+		int room=(h.getXIndex()+1)*300+dataSetIndex+1;
 		b.putInt("Classroom", room);
 		b.putString("Building", building);
 		b.putFloat("Percent", e.getVal());
 		Log.d("Long", room + " " + building + ' ' + e.getVal());
-		RoomInfofg RoomFragment=new RoomInfofg();
-		RoomFragment.setArguments(b);
-		FragmentManager manager=getFragmentManager();
-		FragmentTransaction ft;
-		ft = manager.beginTransaction();
-		ft.replace(R.id.fg, RoomFragment);
-
-		//ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
-		ft.addToBackStack(null);
-		ft.commit();
+		Intent i=new Intent(getActivity(),RoomInfo.class);
+		i.putExtras(b);
+		startActivity(i);
 	}
 
 	@Override
 	public void onNothingSelected() {
 
 	}
-
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		// Handle action bar item clicks here. The action bar will
