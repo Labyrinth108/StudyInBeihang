@@ -30,11 +30,16 @@ import java.util.ArrayList;
 public class SecondFloor extends Fragment implements OnChartValueSelectedListener {
 	private BarChart chart;
 	private View view;
-	private String building="NMB";
+	private String building;
+	private boolean isVisible;
 	@Override
 	public View onCreateView(LayoutInflater inflater,ViewGroup container,Bundle savedInstanceState){
 		super.onCreateView(inflater, container, savedInstanceState);
 		view = inflater.inflate(R.layout.viewpager, container,false);
+		Bundle b=new Bundle();
+		b=this.getArguments();
+		building=b.getString("building");
+
 		chart = (BarChart)view.findViewById(R.id.chart);
 		BarData data = new BarData(getXAxisValues(), getDataSet());
 		chart.setData(data);

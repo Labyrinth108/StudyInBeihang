@@ -30,13 +30,16 @@ import java.util.ArrayList;
 public class FirstFloor extends Fragment implements OnChartValueSelectedListener {
 	private BarChart chart;
 	private View view;
-	private String building="NMB";
+	private String building;
 	private int s=0;
 	@Override
 	public View onCreateView(LayoutInflater inflater,ViewGroup container,Bundle savedInstanceState){
 		super.onCreateView(inflater, container, savedInstanceState);
 
 		view = inflater.inflate(R.layout.viewpager, container, false);
+		Bundle b=new Bundle();
+		b=this.getArguments();
+		building=b.getString("building");
 		chart = (BarChart)view.findViewById(R.id.chart);
 
         BarData data = new BarData(getXAxisValues(), getDataSet());
@@ -102,24 +105,6 @@ public class FirstFloor extends Fragment implements OnChartValueSelectedListener
 		Intent i=new Intent(getActivity(),RoomInfo.class);
 		i.putExtras(b);
 		startActivity(i);
-//		RoomInfofg RoomFragment=new RoomInfofg();
-//		RoomFragment.setArguments(b);
-//		FragmentManager manager=getFragmentManager();
-//		FragmentTransaction ft;
-//		ft = manager.beginTransaction();
-//		ft.addToBackStack(null);
-//		ft.replace(R.id.fg, RoomFragment);
-//		//ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
-//
-//		ft.commit();
-//		Intent intent=new Intent(getActivity(),RoomInfo.class);
-//		Bundle b=new Bundle();
-//		int room=(h.getXIndex()+1)*100+dataSetIndex+1;
-//		b.putInt("Classroom",room);
-//		b.putString("Building",building);
-//		b.putFloat("Percent",e.getVal());
-//		intent.putExtras(b);
-//		startActivity(intent);
 	}
 
 	@Override

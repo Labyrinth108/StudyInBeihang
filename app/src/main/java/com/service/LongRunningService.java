@@ -69,21 +69,19 @@ public class LongRunningService extends Service {
         Log.d("LongRunning","onDestroy executed.");
     }
     private void getRealData(final String location,final boolean First){
-        String address= "http://chaopengz.nat123.net:19870/query/?location="+ URLEncoder.encode(location);
-        HttpUtil.sendHttpRequest(address, new HttpCallbackListener() {
-            @Override
-            public void onFinish(final String response) {
-                boolean result = false;
-                db=new DB(LongRunningService.this);
-                result = HttpUtil.parseJSONWithJSONObject(db, response, First);
-                if (result) {
-                    Log.d("LongRunning", location+"ok");
-                }
-                else{
+            String address= "http://chaopengz.nat123.net:19870/query/?location="+ URLEncoder.encode(location);
+            HttpUtil.sendHttpRequest(address, new HttpCallbackListener() {
+                @Override
+                public void onFinish(final String response) {
+                    boolean result = false;
+                    db = new DB(LongRunningService.this);
+                    result = HttpUtil.parseJSONWithJSONObject(db, response, First);
+                    if (result) {
+                        Log.d("LongRunning", location + "ok");
+                    } else {
 
+                    }
                 }
-            }
-
             @Override
             public void onError(Exception e) {
 //                Intent intent=new Intent(LongRunningService.this,MainActivity.class);

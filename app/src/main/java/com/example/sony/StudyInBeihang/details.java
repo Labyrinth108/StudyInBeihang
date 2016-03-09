@@ -20,6 +20,7 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.database.DB;
+import com.examples.sony.util.MyViewPager;
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.BarDataSet;
@@ -37,12 +38,11 @@ import java.util.List;
 public class details extends FragmentActivity{
     private TitleView mTitle;
     private String building;
-    private BarChart chart;
 
     private List<Fragment> mFragmentList = new ArrayList<Fragment>();
     private FragmentAdapter mFragmentAdapter;
 
-    private ViewPager mPageVp;
+    private MyViewPager mPageVp;
     /**
      * Tab显示内容TextView
      */
@@ -57,7 +57,6 @@ public class details extends FragmentActivity{
     private FirstFloor firstFloorFg;
     private SecondFloor secondFloorFg;
     private ThirdFloor thirdFloorFg;
-    //private RoomInfofg roominfo;
     /**
      * ViewPager的当前选中页
      */
@@ -94,13 +93,6 @@ public class details extends FragmentActivity{
 //
 //            }
 //        });
-//        chart = (BarChart) findViewById(R.id.chart);
-//        BarData data = new BarData(getXAxisValues(), getDataSet());
-//        chart.setData(data);
-//        chart.setDescription(building);
-//        chart.animateXY(2000, 2000);//动画时间
-//        chart.setOnChartValueSelectedListener(this);
-//        chart.invalidate();
     }
 
     private void findById() {
@@ -109,13 +101,19 @@ public class details extends FragmentActivity{
         mTabFriendTv = (TextView) this.findViewById(R.id.id_sf_tv);
 
         mTabLineIv = (ImageView) this.findViewById(R.id.id_tab_line_iv);
-        mPageVp = (ViewPager) this.findViewById(R.id.id_page_vp);
+        mPageVp = (MyViewPager) this.findViewById(R.id.id_page_vp);
     }
 
     private void init() {
         secondFloorFg = new SecondFloor();
         thirdFloorFg = new ThirdFloor();
         firstFloorFg = new FirstFloor();
+
+        Bundle b=new Bundle();
+        b.putString("building",building);
+        firstFloorFg.setArguments(b);
+        secondFloorFg.setArguments(b);
+        thirdFloorFg.setArguments(b);
 
         mFragmentList.add(firstFloorFg);
         mFragmentList.add(secondFloorFg);
@@ -125,8 +123,10 @@ public class details extends FragmentActivity{
                 this.getSupportFragmentManager(), mFragmentList);
         mPageVp.setAdapter(mFragmentAdapter);
         mPageVp.setCurrentItem(0);
+        mPageVp.setOffscreenPageLimit(0);
+
         //mPageVp.addOnPageChangeListener(this);
-        mPageVp.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+        mPageVp.setOnPageChangeListener(new MyViewPager.OnPageChangeListener() {
 
             /**
              * state滑动中的状态 有三种状态（0，1，2） 1：正在滑动 2：滑动完毕 0：什么都没做。
@@ -181,6 +181,7 @@ public class details extends FragmentActivity{
 
             @Override
             public void onPageSelected(int position) {
+
                 resetTextView();
                 switch (position) {
                     case 0:
@@ -245,58 +246,12 @@ public class details extends FragmentActivity{
 //        }
         return Float.parseFloat(p);
     }
-
-    private ArrayList<BarDataSet> getDataSet() {
-
-        ArrayList<BarDataSet> dataSets = new ArrayList<BarDataSet>();
-        for (int index=1;index<=4;index++){
-            ArrayList<BarEntry> valueSet = new ArrayList<>();
-            int r;
-            //计算101室，201室，301室，401室
-            for(int i=0;i<4;i++)
-            {
-                r=(i+1)*100+index;
-                float f=queryClassroom(building,r+"");
-                BarEntry bn=new BarEntry(f ,i);
-                valueSet.add(bn);
-            }
-            BarDataSet barDataSet = new BarDataSet(valueSet, "x0"+index+"室");
-            barDataSet.setColor(ColorTemplate.COLORFUL_COLORS[index-1]);
-            dataSets.add(barDataSet);
-        }
-        return dataSets;
-    }
-
-    private ArrayList<String> getXAxisValues() {
-        ArrayList<String> xAxis = new ArrayList<>();
-        xAxis.add("1楼");
-        xAxis.add("2楼");
-        xAxis.add("3楼");
-        xAxis.add("4楼");
-        return xAxis;
-    }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
 
         return true;
-    }
-
-    public void onValueSelected(Entry e, int dataSetIndex, Highlight h) {
-
-        if (e == null)
-            return;
-        RectF bounds = chart.getBarBounds((BarEntry) e);
-        PointF position = chart.getPosition(e, YAxis.AxisDependency.LEFT);
-        Intent intent=new Intent(this,RoomInfo.class);
-        Bundle b=new Bundle();
-        int room=(h.getXIndex()+1)*100+dataSetIndex+1;
-        b.putInt("Classroom",room);
-        b.putString("Building",building);
-        b.putFloat("Percent",e.getVal());
-        intent.putExtras(b);
-        startActivity(intent);
     }
 
 

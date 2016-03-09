@@ -14,9 +14,11 @@ public class DB {
     private  static DB StudyInBeihangDB;
     private SQLiteDatabase db;
     private int version;
-    public DB(Context context){
-        StudyInBeihangOpenHelper dbHelper=new StudyInBeihangOpenHelper(context,DB_NAME,null,1);
+    private Context context;
+    public DB(Context c){
+        StudyInBeihangOpenHelper dbHelper=new StudyInBeihangOpenHelper(c,DB_NAME,null,1);
         db=dbHelper.getWritableDatabase();
+        context=c;
     }
     public synchronized static  DB getInstance(Context context){
         if(StudyInBeihangDB==null){
@@ -38,7 +40,7 @@ public class DB {
     public void updateClassroom(Classroom classroom){
         if (classroom != null) {
             db.execSQL("update Classroom set percent=? where location=? and room=?",
-                    new String[]{classroom.getPercent(),classroom.getLocation(),classroom.getRoom()});
+                    new String[]{classroom.getPercent(), classroom.getLocation(), classroom.getRoom()});
         }
     }
     //从数据库中读取教室信息

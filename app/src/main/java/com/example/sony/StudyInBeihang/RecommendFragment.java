@@ -6,6 +6,8 @@ import android.support.v4.app.FragmentActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
 
 import com.example.sony.StudyInBeihang.TitleView.OnLeftButtonClickListener;
 //荐书fragment
@@ -13,7 +15,9 @@ public class RecommendFragment extends Fragment {
 
 	private View mParent;
 	private FragmentActivity mActivity;
-
+	private EditText name;
+	private EditText keyword;
+	private Button button;
 	private TitleView mTitle;
 	
 	/**
@@ -48,9 +52,11 @@ public class RecommendFragment extends Fragment {
 		super.onActivityCreated(savedInstanceState);
 		mParent = getView();
 		mActivity = getActivity();
-
+		name=(EditText)mParent.findViewById(R.id.name);
+		keyword=(EditText)mParent.findViewById(R.id.password);
 		mTitle = (TitleView) mParent.findViewById(R.id.title);
 		mTitle.setTitle(R.string.title_recommend);
+
 	}
 
 	private void backHomeFragment() {
