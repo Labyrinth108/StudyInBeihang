@@ -31,7 +31,7 @@ public class ThirdFloor extends Fragment implements OnChartValueSelectedListener
 	private BarChart chart;
 	private View view;
 	private String building;
-
+	private DB db;
 	@Override
 	public View onCreateView(LayoutInflater inflater,ViewGroup container,Bundle savedInstanceState){
 		super.onCreateView(inflater, container, savedInstanceState);
@@ -52,7 +52,7 @@ public class ThirdFloor extends Fragment implements OnChartValueSelectedListener
 
 
 	private float queryClassroom(String location,String room){
-		DB db=new DB(getActivity());
+		db=DB.getInstance(getContext());
 		String p=db.loadClassroom(location,room);
 //        if(p=="")
 //        {

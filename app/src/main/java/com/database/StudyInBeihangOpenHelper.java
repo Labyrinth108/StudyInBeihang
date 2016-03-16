@@ -11,9 +11,11 @@ import android.widget.Toast;
  */
 public class StudyInBeihangOpenHelper extends SQLiteOpenHelper{
     private Context mcontext;
+    private static StudyInBeihangOpenHelper openHelper;
     public static final String CREATE_CLASSROOM="create table Classroom(id integer primary key autoincrement,location text," +
             "room text,idnum integer,percent text)";
-
+    public static final String CREATE_COURSEINFO="create table CourseInfo(id integer primary key autoincrement,week integer,"+
+            "room text,startnum integer,endnum integer)";
     public StudyInBeihangOpenHelper(Context context,String name,SQLiteDatabase.CursorFactory factory,int version){
         super(context,name,factory,version);
         mcontext=context;
@@ -22,6 +24,7 @@ public class StudyInBeihangOpenHelper extends SQLiteOpenHelper{
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(CREATE_CLASSROOM);
+        db.execSQL(CREATE_COURSEINFO);
         Toast.makeText(mcontext, "Create succeed", Toast.LENGTH_SHORT).show();
     }
 

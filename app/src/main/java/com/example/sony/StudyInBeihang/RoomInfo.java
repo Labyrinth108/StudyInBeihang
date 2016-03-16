@@ -2,10 +2,15 @@ package com.example.sony.StudyInBeihang;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Toast;
 
+import com.coursetable.TimeTableModel;
+import com.coursetable.TimeTableView;
+import com.database.DB;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.data.Entry;
@@ -13,32 +18,44 @@ import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.formatter.PercentFormatter;
 import com.github.mikephil.charting.utils.ColorTemplate;
-import com.service.LongRunningService;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by SONY on 2016/2/23.
  */
 public class RoomInfo extends Activity {
     private PieChart mChart;
+    private TimeTableView mTimaTableView;
+    private List<TimeTableModel> mList;
+    private String building;
+    private int room;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.roominfo);
         Intent intent = this.getIntent();        //获取已有的intent对象
         Bundle bundle = intent.getExtras();    //获取intent里面的bundle对象
         float percent = bundle.getFloat("Percent");
-        int room=bundle.getInt("Classroom");
-        String building=bundle.getString("Building");
+        room=bundle.getInt("Classroom");
+        building=bundle.getString("Building");
+
+        mList = new ArrayList<TimeTableModel>();
+        mTimaTableView = (TimeTableView) findViewById(R.id.main_timetable_ly);
+        addList();
+        mTimaTableView.setTimeTable(mList);
+
+
+        String buildingtext="";
             switch (building){
-            case "NMB": building="新主楼";break;
-            case "ZhuM":building="主M";break;
-            case "J3":building="教三";break;
-            case "J4":building="教四";break;
-            case "J5":building="教五";break;
+            case "NMB": buildingtext="新主楼";break;
+            case "ZhuM":buildingtext="主M";break;
+            case "J3":buildingtext="教三";break;
+            case "J4":buildingtext="教四";break;
+            case "J5":buildingtext="教五";break;
         }
         TitleView tv=(TitleView)findViewById(R.id.title);
-        tv.setTitle(building+room+"室");
+        tv.setTitle(buildingtext+room+"室");
         tv.setLeftButton("", new TitleView.OnLeftButtonClickListener() {
             @Override
             public void onClick(View button) {
@@ -98,6 +115,21 @@ public class RoomInfo extends Activity {
         mChart.setCenterTextSize(18f);
         mChart.invalidate();
     }
+    private void addList() {
+        DB db=DB.getInstance(RoomInfo.this);
+        Cursor c=db.loadCourseInfo(building+"-"+room);
+        int k=0;
+        while(c.moveToNext()){
+            int week=c.getInt(c.getColumnIndex("week"));
+            int startnum=c.getInt(c.getColumnIndex("startnum"));
+            int endnum=c.getInt(c.getColumnIndex("endnum"));
+            k++;
+            mList.add(new TimeTableModel(k,startnum ,endnum ,week,building+"-"+room));
+        }
+        if(c!=null)
+            c.close();
+    }
+
     protected void onDestroy() {
         super.onDestroy();
          finish();

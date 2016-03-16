@@ -1,6 +1,7 @@
 package com.example.sony.StudyInBeihang;
 
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;

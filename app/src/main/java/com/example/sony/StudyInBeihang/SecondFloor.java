@@ -31,13 +31,12 @@ public class SecondFloor extends Fragment implements OnChartValueSelectedListene
 	private BarChart chart;
 	private View view;
 	private String building;
-	private boolean isVisible;
+	private DB db;
 	@Override
 	public View onCreateView(LayoutInflater inflater,ViewGroup container,Bundle savedInstanceState){
 		super.onCreateView(inflater, container, savedInstanceState);
 		view = inflater.inflate(R.layout.viewpager, container,false);
-		Bundle b=new Bundle();
-		b=this.getArguments();
+		Bundle b=this.getArguments();
 		building=b.getString("building");
 
 		chart = (BarChart)view.findViewById(R.id.chart);
@@ -56,7 +55,7 @@ public class SecondFloor extends Fragment implements OnChartValueSelectedListene
 	}
 
 	private float queryClassroom(String location,String room){
-		DB db=new DB(getActivity());
+		db=DB.getInstance(getContext());
 		String p=db.loadClassroom(location,room);
 		return Float.parseFloat(p);
 	}

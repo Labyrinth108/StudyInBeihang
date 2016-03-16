@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 
 /**
@@ -12,26 +13,35 @@ import android.database.sqlite.SQLiteDatabase;
 public class DB {
     public static final String DB_NAME="StudyInBeihang.db";
     private  static DB StudyInBeihangDB;
-    private SQLiteDatabase db;
-    private int version;
-    private Context context;
+    private static StudyInBeihangOpenHelper openhelper;
+    private static SQLiteDatabase db;
     public DB(Context c){
-        StudyInBeihangOpenHelper dbHelper=new StudyInBeihangOpenHelper(c,DB_NAME,null,1);
-        db=dbHelper.getWritableDatabase();
-        context=c;
+        openhelper=new StudyInBeihangOpenHelper(c,DB_NAME,null,1);
+        db=openhelper.getWritableDatabase();
     }
-    public synchronized static  DB getInstance(Context context){
+    public synchronized static DB getInstance(Context context){
         if(StudyInBeihangDB==null){
             StudyInBeihangDB=new DB(context);
         }
         return StudyInBeihangDB;
     }
     //储存到数据库
+    public void saveCourse(Courseinfo ci) {
+        if (ci != null) {
+            ContentValues values=new ContentValues();
+            values.put("week",ci.getWeek());
+            values.put("room",ci.getRoom());
+            values.put("startnum", ci.getStartnum());
+            values.put("endnum", ci.getEndnum());
+            db.insert("CourseInfo", null, values);
+        }
+    }
+    //储存到数据库
     public void saveClassroom(Classroom classroom) {
         if (classroom != null) {
             ContentValues values=new ContentValues();
             values.put("location",classroom.getLocation());
-            values.put("room",classroom.getRoom());
+            values.put("room", classroom.getRoom());
             values.put("idnum", classroom.getIdnum());
             values.put("percent", classroom.getPercent());
             db.insert("Classroom", null, values);
@@ -45,7 +55,7 @@ public class DB {
     }
     //从数据库中读取教室信息
     public  String loadClassroom(String l,String r){
-        Cursor cursor=db.rawQuery("select percent from Classroom where location=? and room =?",new String[]{l,r});
+        Cursor cursor=db.rawQuery("select percent from Classroom where location=? and room=?",new String[]{l,r});
         if(cursor.moveToFirst()) {
             return cursor.getString(0);
         }
@@ -53,5 +63,14 @@ public class DB {
             cursor.close();
         }
         return "";
+    }
+    //从数据库中读取某教室的课表信息
+    public  Cursor loadCourseInfo(String room) {
+        Cursor cursor = db.rawQuery("select * from CourseInfo where room like?", new String[]{"%"+room+"%"});
+
+        if(cursor.moveToFirst()) {
+            return cursor;
+        }
+        else return null;
     }
 }

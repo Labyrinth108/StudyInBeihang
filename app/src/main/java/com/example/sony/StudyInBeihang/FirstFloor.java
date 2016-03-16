@@ -31,14 +31,14 @@ public class FirstFloor extends Fragment implements OnChartValueSelectedListener
 	private BarChart chart;
 	private View view;
 	private String building;
+	private DB db;
 	private int s=0;
 	@Override
 	public View onCreateView(LayoutInflater inflater,ViewGroup container,Bundle savedInstanceState){
 		super.onCreateView(inflater, container, savedInstanceState);
 
 		view = inflater.inflate(R.layout.viewpager, container, false);
-		Bundle b=new Bundle();
-		b=this.getArguments();
+		Bundle b=this.getArguments();
 		building=b.getString("building");
 		chart = (BarChart)view.findViewById(R.id.chart);
 
@@ -53,10 +53,8 @@ public class FirstFloor extends Fragment implements OnChartValueSelectedListener
 
 
 	private float queryClassroom(String location,String room){
-		DB db=new DB(getActivity());
+		db=DB.getInstance(getContext());
 		String p=db.loadClassroom(location,room);
-
-//        }
 		return Float.parseFloat(p);
 	}
 
@@ -101,7 +99,6 @@ public class FirstFloor extends Fragment implements OnChartValueSelectedListener
 		b.putInt("Classroom", room);
 		b.putString("Building", building);
 		b.putFloat("Percent", e.getVal());
-		Log.d("Long", room + " " + building + ' ' + e.getVal());
 		Intent i=new Intent(getActivity(),RoomInfo.class);
 		i.putExtras(b);
 		startActivity(i);

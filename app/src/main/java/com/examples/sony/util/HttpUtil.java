@@ -3,6 +3,7 @@ import android.text.TextUtils;
 import android.util.Log;
 
 import com.database.Classroom;
+import com.database.Courseinfo;
 import com.database.DB;
 
 import org.json.JSONArray;
@@ -57,11 +58,6 @@ public class HttpUtil {
             }
         }).start();
     }
-    /*
-     * Function  :   发送Post请求到服务器
-     * Param     :   params请求体内容，encode编码格式
-     * Author    :   博客园-依旧淡然
-     */
     public static void submitPostData(final Map<String, String> params, final String encode) {
         new Thread(new Runnable() {
            @Override
@@ -95,11 +91,6 @@ public class HttpUtil {
            }
        }).start();
     }
-    /*
-     * Function  :   封装请求体信息
-     * Param     :   params请求体内容，encode编码格式
-     * Author    :   博客园-依旧淡然
-     */
     public static StringBuffer getRequestData(Map<String, String> params, String encode) {
         StringBuffer stringBuffer = new StringBuffer();        //存储封装好的请求体信息
         try {
@@ -135,6 +126,46 @@ public class HttpUtil {
         resultData = new String(byteArrayOutputStream.toByteArray());
         return resultData;
     }
+    public static boolean GetCourseinfoWithJSONObject(DB db, String response) {
+        if (!TextUtils.isEmpty(response)) {
+            try {
+                JSONArray jsonArray = new JSONArray(response);
+                for (int i = 0; i < jsonArray.length(); i++) {
+                    JSONObject jsonObject = jsonArray.getJSONObject(i);
+                    if(jsonObject.getString("course").equals("1")){
+                        Courseinfo ci=new Courseinfo();
+                        String s=jsonObject.getString("date");
+                        String date[]=s.split("_");
+                        int week=0;
+                        switch (date[0].toString()){
+                            case "Mon": week=1;break;
+                            case "Tue": week=2;break;
+                            case "Wed":week=3;break;
+                            case "Thu":week=4;break;
+                            case "Fri":week=5;break;
+                            case "Sat":week=6;break;
+                            case "Sun":week=7;break;
+                            default:break;
+                        }
+                        ci.setWeek(week);
+                        String num[]=date[1].split(",");
+                        ci.setStartnum(Integer.parseInt(num[0]));
+                        ci.setEndnum(Integer.parseInt(num[1]));
+                        ci.setRoom(jsonObject.getString("room"));
+                        db.saveCourse(ci);
+                        Log.d("LongRunning", ci.getRoom() + ci.getWeek() + "Create");
+                    }
+                }
+                return true;
+            } catch (Exception e) {
+                e.printStackTrace();
+            } finally {
+
+            }
+
+        }
+        return false;
+    }
     public static boolean parseJSONWithJSONObject(DB db, String response,boolean First){
         if(!TextUtils.isEmpty(response)){
             String location="";
@@ -159,6 +190,7 @@ public class HttpUtil {
                     cr.setPercent(jsonObject.getString("percent"));
                     if(First){
                         db.saveClassroom(cr);
+                        Log.d("LongRunning", cr.getLocation() + cr.getRoom() + "Create");
                     }
                     else{
                         db.updateClassroom(cr);
