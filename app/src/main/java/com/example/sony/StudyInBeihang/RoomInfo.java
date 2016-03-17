@@ -71,8 +71,6 @@ public class RoomInfo extends Activity {
         mChart.setRotationAngle(90); // 初始旋转角度
         // enable rotation of the chart by touch
         mChart.setRotationEnabled(true); // 可以手动旋转
-        // draws the corresponding description value into the slice
-        // mChart.setDrawXValues(true);
 
         // display percentage values
         mChart.setUsePercentValues(true);  //显示成百分比
@@ -119,6 +117,10 @@ public class RoomInfo extends Activity {
         DB db=DB.getInstance(RoomInfo.this);
         Cursor c=db.loadCourseInfo(building+"-"+room);
         int k=0;
+        if(c==null){
+            Toast.makeText(this,"请联网后使用！",Toast.LENGTH_LONG).show();
+            return;
+        }
         while(c.moveToNext()){
             int week=c.getInt(c.getColumnIndex("week"));
             int startnum=c.getInt(c.getColumnIndex("startnum"));

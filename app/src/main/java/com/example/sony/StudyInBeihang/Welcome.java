@@ -31,6 +31,6 @@ public class Welcome extends Activity{
                 //启动主Activity后销毁自身
                 finish();
             }
-        }, 3000);
+        }, 5000);
     }
 }

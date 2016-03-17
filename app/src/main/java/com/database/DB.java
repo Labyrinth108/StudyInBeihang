@@ -67,7 +67,6 @@ public class DB {
     //从数据库中读取某教室的课表信息
     public  Cursor loadCourseInfo(String room) {
         Cursor cursor = db.rawQuery("select * from CourseInfo where room like?", new String[]{"%"+room+"%"});
-
         if(cursor.moveToFirst()) {
             return cursor;
         }

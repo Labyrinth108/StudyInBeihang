@@ -10,9 +10,12 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.database.DB;
 import com.github.mikephil.charting.charts.BarChart;
@@ -32,6 +35,11 @@ public class SecondFloor extends Fragment implements OnChartValueSelectedListene
 	private View view;
 	private String building;
 	private DB db;
+	private int hasData=1;
+	@Override
+	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+	}
+
 	@Override
 	public View onCreateView(LayoutInflater inflater,ViewGroup container,Bundle savedInstanceState){
 		super.onCreateView(inflater, container, savedInstanceState);
@@ -42,10 +50,14 @@ public class SecondFloor extends Fragment implements OnChartValueSelectedListene
 		chart = (BarChart)view.findViewById(R.id.chart);
 		BarData data = new BarData(getXAxisValues(), getDataSet());
 		chart.setData(data);
-		//chart.setDescription(building);
+		chart.setDescription(building);
 		chart.animateXY(2000, 2000);//动画时间
 		chart.setOnChartValueSelectedListener(this);
 		chart.invalidate();
+
+		if(hasData==0){
+			Toast.makeText(getContext(), "请联网后使用！", Toast.LENGTH_SHORT).show();
+		}
 		return view;
 	}
 	
@@ -57,6 +69,11 @@ public class SecondFloor extends Fragment implements OnChartValueSelectedListene
 	private float queryClassroom(String location,String room){
 		db=DB.getInstance(getContext());
 		String p=db.loadClassroom(location,room);
+		if(p=="")
+		{
+			hasData=0;
+			return 0;
+		}
 		return Float.parseFloat(p);
 	}
 
@@ -91,7 +108,8 @@ public class SecondFloor extends Fragment implements OnChartValueSelectedListene
 	@Override
 
 	public void onValueSelected(Entry e, int dataSetIndex, Highlight h) {
-
+		if(hasData==0)
+			return;
 		if (e == null)
 			return;
 		RectF bounds = chart.getBarBounds((BarEntry) e);

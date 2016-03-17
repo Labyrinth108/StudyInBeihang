@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.database.DB;
 import com.github.mikephil.charting.charts.BarChart;
@@ -33,6 +34,7 @@ public class FirstFloor extends Fragment implements OnChartValueSelectedListener
 	private String building;
 	private DB db;
 	private int s=0;
+	private int hasData=1;
 	@Override
 	public View onCreateView(LayoutInflater inflater,ViewGroup container,Bundle savedInstanceState){
 		super.onCreateView(inflater, container, savedInstanceState);
@@ -44,10 +46,15 @@ public class FirstFloor extends Fragment implements OnChartValueSelectedListener
 
         BarData data = new BarData(getXAxisValues(), getDataSet());
         chart.setData(data);
-        //chart.setDescription(building);
+        chart.setDescription(building);
         chart.animateXY(2000, 2000);//动画时间
         chart.setOnChartValueSelectedListener(this);
         chart.invalidate();
+
+		if(hasData==0){
+			Toast.makeText(getContext(), "请联网后使用！", Toast.LENGTH_SHORT).show();
+		}
+
 		return view;
 	}
 
@@ -55,6 +62,11 @@ public class FirstFloor extends Fragment implements OnChartValueSelectedListener
 	private float queryClassroom(String location,String room){
 		db=DB.getInstance(getContext());
 		String p=db.loadClassroom(location,room);
+		if(p=="")
+		{
+			hasData=0;
+			return 0;
+		}
 		return Float.parseFloat(p);
 	}
 
@@ -89,7 +101,8 @@ public class FirstFloor extends Fragment implements OnChartValueSelectedListener
 	@Override
 
 	public void onValueSelected(Entry e, int dataSetIndex, Highlight h) {
-
+		if(hasData==0)
+			return ;
 		if (e == null)
 			return;
 		RectF bounds = chart.getBarBounds((BarEntry) e);

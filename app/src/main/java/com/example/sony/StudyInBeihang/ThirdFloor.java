@@ -6,13 +6,12 @@ import android.graphics.PointF;
 import android.graphics.RectF;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.database.DB;
 import com.github.mikephil.charting.charts.BarChart;
@@ -32,21 +31,24 @@ public class ThirdFloor extends Fragment implements OnChartValueSelectedListener
 	private View view;
 	private String building;
 	private DB db;
+	private int hasData=1;
 	@Override
 	public View onCreateView(LayoutInflater inflater,ViewGroup container,Bundle savedInstanceState){
 		super.onCreateView(inflater, container, savedInstanceState);
 		view = inflater.inflate(R.layout.viewpager, container,false);
-		Bundle b=new Bundle();
-		b=this.getArguments();
+		Bundle b=this.getArguments();
 		building=b.getString("building");
 
 		chart = (BarChart)view.findViewById(R.id.chart);
 		BarData data = new BarData(getXAxisValues(), getDataSet());
 		chart.setData(data);
-		//chart.setDescription(building);
+		chart.setDescription(building);
 		chart.animateXY(2000, 2000);//动画时间
 		chart.setOnChartValueSelectedListener(this);
 		chart.invalidate();
+		if(hasData==0){
+			Toast.makeText(getContext(), "请联网后使用！", Toast.LENGTH_SHORT).show();
+		}
 		return view;
 	}
 
@@ -54,24 +56,11 @@ public class ThirdFloor extends Fragment implements OnChartValueSelectedListener
 	private float queryClassroom(String location,String room){
 		db=DB.getInstance(getContext());
 		String p=db.loadClassroom(location,room);
-//        if(p=="")
-//        {
-//            new AlertDialog.Builder(details.this)
-//                    .setIcon(R.drawable.internet)
-//                    .setTitle("请您连接网络")
-//                    .setPositiveButton("确定",
-//                            new DialogInterface.OnClickListener() {
-//                                @Override
-//                                public void onClick(DialogInterface dialog,
-//                                                    int which) {
-//                                    Intent intent=new Intent(details.this,LongRunningService.class);
-//                                    startActivity(intent);
-//                                    // TODO Auto-generated method stub
-//
-//                                }
-//                            }).setNegativeButton("取消", null).create()
-//                    .show();
-//        }
+		if(p=="")
+		{
+			hasData=0;
+			return 0;
+		}
 		return Float.parseFloat(p);
 	}
 
@@ -106,7 +95,8 @@ public class ThirdFloor extends Fragment implements OnChartValueSelectedListener
 	@Override
 
 	public void onValueSelected(Entry e, int dataSetIndex, Highlight h) {
-
+		if(hasData==0)
+			return ;
 		if (e == null)
 			return;
 		RectF bounds = chart.getBarBounds((BarEntry) e);

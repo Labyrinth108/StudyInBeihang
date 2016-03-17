@@ -2,6 +2,7 @@ package com.service;
 
 import android.app.AlarmManager;
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.app.PendingIntent;
 import android.app.Service;
 import android.content.DialogInterface;
@@ -12,6 +13,7 @@ import android.os.SystemClock;
 import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Toast;
 
 import com.database.DB;
@@ -24,9 +26,6 @@ import com.examples.sony.util.HttpCallbackListener;
 import com.examples.sony.util.HttpUtil;
 
 import java.net.URLEncoder;
-import java.util.Date;
-
-import static java.lang.Thread.sleep;
 
 /**
  * Created by SONY on 2016/2/21.
@@ -48,6 +47,7 @@ public class LongRunningService extends Service {
            db=new DB(this);
         }
         else db=DB.getInstance(LongRunningService.this);
+
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -71,18 +71,13 @@ public class LongRunningService extends Service {
 
                             @Override
                             public void onError(Exception e) {
-//                Intent intent=new Intent(LongRunningService.this,MainActivity.class);
-//                Bundle b=new Bundle();
-//                b.putString("Error","yes");
-//                startActivity(intent);
-
+                                //Toast.makeText(LongRunningService.this,"请连网后使用",Toast.LENGTH_LONG).show();
                             }
                         });
                     }
 
                 }
             }
-            //}
         }).start();
 
 
@@ -90,9 +85,7 @@ public class LongRunningService extends Service {
         int aMinute=60*60*1000;
         long triggerAtTime= SystemClock.elapsedRealtime()+10*aMinute;
         Intent i=new Intent(this, AlarmReceiver.class);
-        Bundle b=new Bundle();
-        b.putBoolean("First", false);
-        i.putExtras(b);
+
         PendingIntent pi=PendingIntent.getBroadcast(this,0,i,0);
         manager.set(AlarmManager.ELAPSED_REALTIME_WAKEUP,triggerAtTime,pi);
         return super.onStartCommand(intent,flags,startId);
@@ -117,11 +110,7 @@ public class LongRunningService extends Service {
                 }
             @Override
             public void onError(Exception e) {
-//                Intent intent=new Intent(LongRunningService.this,MainActivity.class);
-//                Bundle b=new Bundle();
-//                b.putString("Error","yes");
-//                startActivity(intent);
-
+               // Toast.makeText(LongRunningService.this,"请连网后使用",Toast.LENGTH_LONG).show();
             }
         });
     }

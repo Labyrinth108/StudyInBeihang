@@ -190,11 +190,9 @@ public class HttpUtil {
                     cr.setPercent(jsonObject.getString("percent"));
                     if(First){
                         db.saveClassroom(cr);
-                        Log.d("LongRunning", cr.getLocation() + cr.getRoom() + "Create");
                     }
                     else{
                         db.updateClassroom(cr);
-                        Log.d("LongRunning", cr.getLocation() + cr.getRoom() + "Update");
                     }
                 }
                 return true;
