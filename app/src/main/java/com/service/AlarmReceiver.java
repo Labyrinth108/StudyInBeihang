@@ -13,9 +13,6 @@ public class AlarmReceiver extends BroadcastReceiver{
     @Override
     public void onReceive(Context context, Intent intent) {
         Intent i=new Intent(context,LongRunningService.class);
-        Bundle b=new Bundle();
-        b.putBoolean("First", false);
-        i.putExtras(b);
         context.startService(i);
     }
 }

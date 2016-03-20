@@ -72,7 +72,7 @@ public class DiningroomFragment extends Fragment {
 
 		map = new HashMap<String, Object>();
 		map.put("title", "学二食堂");
-		map.put("img", R.drawable.zm);
+		map.put("img", R.drawable.seconddininghall);
 		list.add(map);
 
 

@@ -5,6 +5,7 @@ import android.util.Log;
 import com.database.Classroom;
 import com.database.Courseinfo;
 import com.database.DB;
+import com.database.UserRatio;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -203,5 +204,40 @@ public class HttpUtil {
             }
         }
     return false;
+    }
+    public static boolean getDensityData(DB db, String response,boolean First){
+        if(!TextUtils.isEmpty(response)){
+            String location="";
+            try{
+                JSONArray jsonArray=new JSONArray(response);
+                for(int i=0;i<jsonArray.length();i++){
+                    JSONObject jsonObject=jsonArray.getJSONObject(i);
+
+                    switch (jsonObject.getString("location")){
+                        case "新主楼": location="NMB";break;
+                        case "主M":location="ZhuM";break;
+                        case "教三":location="J3";break;
+                        case "教四":location="J4";break;
+                        case "教五":location="J5";break;
+                        case "学院路图书馆":location="XYLib";break;
+                        case "沙河校区图书馆":location="SheheLib";break;
+                        default:break;
+                    }
+                    UserRatio ur=new UserRatio(location,jsonObject.getString("density"));
+                    if(First){
+                        db.saveUserRatio(ur);
+                    }
+                    else{
+                        db.updateUserRatio(ur);
+                    }
+                }
+                return true;
+            }catch (Exception e){
+                e.printStackTrace();
+            }finally{
+
+            }
+        }
+        return false;
     }
 }

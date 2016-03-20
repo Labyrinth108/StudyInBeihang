@@ -21,9 +21,6 @@ public class Welcome extends Activity{
             @Override
             public void run() {
                 Intent intent=new Intent(Welcome.this,LongRunningService.class);
-                Bundle bundle=new Bundle();
-                bundle.putBoolean("First", true);
-                intent.putExtras(bundle);
                 startService(intent);
 
                 Intent i = new Intent(Welcome.this, MainActivity.class);

@@ -32,7 +32,7 @@ import java.net.URLEncoder;
  */
 public class LongRunningService extends Service {
     private static DB db;
-    private boolean first=true;
+    private boolean first=false;
     private String[] buildings={"新主楼","教三","教四","教五","主M"};
     @Nullable
     @Override
@@ -41,16 +41,16 @@ public class LongRunningService extends Service {
     }
     @Override
     public int onStartCommand(Intent intent, int flags,int startId){
-        Bundle bundle=intent.getExtras();
-        first=bundle.getBoolean("First");
-        if(first){
+        if(db==null){
            db=new DB(this);
+            first=true;
         }
         else db=DB.getInstance(LongRunningService.this);
 
         new Thread(new Runnable() {
             @Override
             public void run() {
+                    getDensity();
                 for (String s : buildings)
                     getRealData(s, first);
                 if (first) {
@@ -77,7 +77,7 @@ public class LongRunningService extends Service {
                     }
 
                 }
-            }
+           }
         }).start();
 
 
@@ -93,7 +93,26 @@ public class LongRunningService extends Service {
     @Override
     public void onDestroy(){
         super.onDestroy();
-        Log.d("LongRunning","onDestroy executed.");
+        Log.d("LongRunning", "onDestroy executed.");
+    }
+    private void getDensity(){
+        String address= "http://vpn.iliana.wang/queryall/";
+        HttpUtil.sendHttpRequest(address, new HttpCallbackListener() {
+            @Override
+            public void onFinish(final String response) {
+                boolean result = false;
+                result = HttpUtil.getDensityData(db,response,first);
+                if (result) {
+                    Log.d("LongRunning", "DENSITY ok");
+                } else {
+
+                }
+            }
+            @Override
+            public void onError(Exception e) {
+                // Toast.makeText(LongRunningService.this,"请连网后使用",Toast.LENGTH_LONG).show();
+            }
+        });
     }
     private void getRealData(final String location,final boolean First){
             String address= "http://vpn.iliana.wang/query/?location="+ URLEncoder.encode(location);

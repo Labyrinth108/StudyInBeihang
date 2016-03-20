@@ -72,4 +72,30 @@ public class DB {
         }
         else return null;
     }
+    public void saveUserRatio(UserRatio ur) {
+        if (ur != null) {
+            ContentValues values=new ContentValues();
+            values.put("location",ur.getLocation());
+            values.put("density", ur.getDensity());
+            db.insert("UserRatio", null, values);
+        }
+    }
+    public void updateUserRatio(UserRatio userRatio){
+        if (userRatio!= null) {
+            db.execSQL("update UserRatio set density=? where location=?",
+                    new String[]{userRatio.getDensity(), userRatio.getLocation()});
+        }
+    }
+    //从数据库中读取教室信息
+    public  String loadUserRatio(String l){
+        Cursor cursor=db.rawQuery("select density from UserRatio where location like ?",new String[]{"%"+l+"%"});
+        if(cursor.moveToFirst()) {
+            return cursor.getString(0);
+        }
+        if(cursor!=null){
+            cursor.close();
+        }
+        return "";
+    }
+
 }

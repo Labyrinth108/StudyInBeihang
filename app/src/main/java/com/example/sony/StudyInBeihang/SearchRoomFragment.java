@@ -10,6 +10,8 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
+
+import com.database.DB;
 import com.example.sony.StudyInBeihang.TitleView.OnLeftButtonClickListener;
 import com.example.sony.StudyInBeihang.TitleView.OnRightButtonClickListener;
 
@@ -23,7 +25,7 @@ public class SearchRoomFragment extends Fragment{
     private View mParent;
     private FragmentActivity mActivity;
     private TitleView mTitle;
-
+    private DB db;
     /**
      * Create a new instance of DetailsFragment, initialized to show the text at
      * 'index'.
@@ -46,9 +48,10 @@ public class SearchRoomFragment extends Fragment{
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_searchroom, container, false);
 
+        db=DB.getInstance(getActivity());
         ListView lv=(ListView)view.findViewById(R.id.lv);
         SimpleAdapter adapter = new SimpleAdapter(this.getActivity(),getData(),R.layout.vlist,new String[]{"title","info","img"},
-                new int[]{R.id.title,R.id.info,R.id.img});
+                new int[]{R.id.title,R.id.useratio,R.id.img});
         lv.setAdapter(adapter);
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
@@ -80,40 +83,43 @@ public class SearchRoomFragment extends Fragment{
 
         Map<String, Object> map = new HashMap<String, Object>();
         map.put("title", "新主楼");
+        map.put("info","整体使用率："+db.loadUserRatio("NMB"));
         map.put("img", R.drawable.newmainbuilding);
         list.add(map);
 
         map = new HashMap<String, Object>();
         map.put("title", "主M");
+        map.put("info","整体使用率："+db.loadUserRatio("ZhuM"));
         map.put("img", R.drawable.zm);
         list.add(map);
 
         map = new HashMap<String, Object>();
         map.put("title", "学院路图书馆");
+        map.put("info","整体使用率："+db.loadUserRatio("XYLib"));
         map.put("img", R.drawable.xueyuanlib);
         list.add(map);
 
         map = new HashMap<String, Object>();
         map.put("title", "沙河校区教3");
-       // map.put("info", "google 3");
+        map.put("info","整体使用率："+db.loadUserRatio("J3"));
         map.put("img", R.drawable.j3);
         list.add(map);
 
         map = new HashMap<String, Object>();
         map.put("title", "沙河校区教4");
-        // map.put("info", "google 3");
+        map.put("info","整体使用率："+db.loadUserRatio("J4"));
         map.put("img", R.drawable.j4);
         list.add(map);
 
         map = new HashMap<String, Object>();
         map.put("title", "沙河校区教5");
-        // map.put("info", "google 3");
+        map.put("info","整体使用率："+db.loadUserRatio("J5"));
         map.put("img", R.drawable.j5);
         list.add(map);
 
         map = new HashMap<String, Object>();
         map.put("title", "沙河校区图书馆");
-        // map.put("info", "google 3");
+        map.put("info","整体使用率："+db.loadUserRatio("ShaheLib"));
         map.put("img", R.drawable.shahelibrary);
         list.add(map);
         return list;
