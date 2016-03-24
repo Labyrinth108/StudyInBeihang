@@ -22,6 +22,7 @@
             </intent-filter>
         </activity>
         <activity android:name="com.example.sony.StudyInBeihang.MainActivity" />
+        <activity android:name="com.example.sony.StudyInBeihang.BooksInfo" />
         <activity android:name="com.example.sony.StudyInBeihang.HelpActivity" />
         <activity android:name="com.example.sony.StudyInBeihang.RoomInfo"
             android:launchMode="singleTask"/>

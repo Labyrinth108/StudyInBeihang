@@ -20,9 +20,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import in.srain.cube.views.ptr.PtrClassicFrameLayout;
+import in.srain.cube.views.ptr.PtrDefaultHandler;
+import in.srain.cube.views.ptr.PtrFrameLayout;
+
 //自习fragment
 public class SearchRoomFragment extends Fragment{
     private View mParent;
+    PtrClassicFrameLayout ptrFrame;
     private FragmentActivity mActivity;
     private TitleView mTitle;
     private DB db;
@@ -49,6 +54,24 @@ public class SearchRoomFragment extends Fragment{
         View view = inflater.inflate(R.layout.fragment_searchroom, container, false);
 
         db=DB.getInstance(getActivity());
+        ptrFrame=(PtrClassicFrameLayout)view.findViewById(R.id.ptr_frame);
+        ptrFrame.setPtrHandler(new in.srain.cube.views.ptr.PtrHandler() {
+            @Override
+            public boolean checkCanDoRefresh(PtrFrameLayout frame, View content, View header) {
+                return PtrDefaultHandler.checkContentCanBePulledDown(frame, content, header);
+            }
+
+            @Override
+            public void onRefreshBegin(PtrFrameLayout frame){
+                frame.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                      //
+                        ptrFrame.refreshComplete();
+                    }
+                }, 1800);
+            }
+        });
         ListView lv=(ListView)view.findViewById(R.id.lv);
         SimpleAdapter adapter = new SimpleAdapter(this.getActivity(),getData(),R.layout.vlist,new String[]{"title","info","img"},
                 new int[]{R.id.title,R.id.useratio,R.id.img});

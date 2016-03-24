@@ -9,7 +9,11 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         />
-
+    <in.srain.cube.views.ptr.PtrClassicFrameLayout
+        android:id="@+id/ptr_frame"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1">
     <ListView
         android:id="@+id/lv"
         android:layout_width="match_parent"
@@ -22,4 +26,6 @@
         android:divider="@color/background_color"
         >
     </ListView>
+    </in.srain.cube.views.ptr.PtrClassicFrameLayout>
+
 </LinearLayout>

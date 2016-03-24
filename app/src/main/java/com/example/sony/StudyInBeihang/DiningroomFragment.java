@@ -16,8 +16,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class DiningroomFragment extends Fragment {
+import in.srain.cube.views.ptr.PtrClassicFrameLayout;
+import in.srain.cube.views.ptr.PtrDefaultHandler;
+import in.srain.cube.views.ptr.PtrFrameLayout;
 
+public class DiningroomFragment extends Fragment {
+	PtrClassicFrameLayout ptrFrame;
 	private View mParent;
 	private FragmentActivity mActivity;
 
@@ -52,7 +56,24 @@ public class DiningroomFragment extends Fragment {
 		SimpleAdapter adapter = new SimpleAdapter(this.getActivity(),getData(),R.layout.vlist,new String[]{"title","info","img"},
 				new int[]{R.id.title,R.id.info,R.id.img});
 		lv.setAdapter(adapter);
+		ptrFrame=(PtrClassicFrameLayout)view.findViewById(R.id.ptr_frame);
+		ptrFrame.setPtrHandler(new in.srain.cube.views.ptr.PtrHandler() {
+			@Override
+			public boolean checkCanDoRefresh(PtrFrameLayout frame, View content, View header) {
+				return PtrDefaultHandler.checkContentCanBePulledDown(frame, content, header);
+			}
 
+			@Override
+			public void onRefreshBegin(PtrFrameLayout frame) {
+				frame.postDelayed(new Runnable() {
+					@Override
+					public void run() {
+						//
+						ptrFrame.refreshComplete();
+					}
+				}, 1800);
+			}
+		});
 		return view;
 	}
 
@@ -61,13 +82,13 @@ public class DiningroomFragment extends Fragment {
 
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("title", "合一食堂二楼");
-		map.put("img", R.drawable.newmainbuilding);
+		map.put("img", R.drawable.secondf);
 		list.add(map);
 
 
 		map = new HashMap<String, Object>();
 		map.put("title", "合一食堂三楼");
-		map.put("img", R.drawable.shahelibrary);
+		map.put("img", R.drawable.thirdfloor);
 		list.add(map);
 
 		map = new HashMap<String, Object>();

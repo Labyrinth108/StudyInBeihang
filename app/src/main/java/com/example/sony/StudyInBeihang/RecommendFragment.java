@@ -1,5 +1,6 @@
 package com.example.sony.StudyInBeihang;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -57,6 +58,14 @@ public class RecommendFragment extends Fragment {
 		mTitle = (TitleView) mParent.findViewById(R.id.title);
 		mTitle.setTitle(R.string.title_recommend);
 
+		Button button=(Button)mActivity.findViewById(R.id.button);
+		button.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				Intent intent=new Intent(mActivity,BooksInfo.class);
+				startActivity(intent);
+			}
+		});
 	}
 
 	private void backHomeFragment() {

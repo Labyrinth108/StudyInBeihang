@@ -22,6 +22,10 @@ import com.github.mikephil.charting.utils.ColorTemplate;
 import java.util.ArrayList;
 import java.util.List;
 
+import in.srain.cube.views.ptr.PtrClassicFrameLayout;
+import in.srain.cube.views.ptr.PtrDefaultHandler;
+import in.srain.cube.views.ptr.PtrFrameLayout;
+
 /**
  * Created by SONY on 2016/2/23.
  */
@@ -31,6 +35,7 @@ public class RoomInfo extends Activity {
     private List<TimeTableModel> mList;
     private String building;
     private int room;
+    PtrClassicFrameLayout ptrFrame;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.roominfo);
@@ -45,7 +50,24 @@ public class RoomInfo extends Activity {
         addList();
         mTimaTableView.setTimeTable(mList);
 
+        ptrFrame=(PtrClassicFrameLayout)findViewById(R.id.ptr_frame);
+        ptrFrame.setPtrHandler(new in.srain.cube.views.ptr.PtrHandler() {
+            @Override
+            public boolean checkCanDoRefresh(PtrFrameLayout frame, View content, View header) {
+                return PtrDefaultHandler.checkContentCanBePulledDown(frame, content, header);
+            }
 
+            @Override
+            public void onRefreshBegin(PtrFrameLayout frame) {
+                frame.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        //
+                        ptrFrame.refreshComplete();
+                    }
+                }, 1800);
+            }
+        });
         String buildingtext="";
             switch (building){
             case "NMB": buildingtext="新主楼";break;

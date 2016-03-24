@@ -18,6 +18,11 @@
         android:layout_height="200dip"
         android:layout_gravity="center_horizontal">
     </com.github.mikephil.charting.charts.PieChart>
+    <in.srain.cube.views.ptr.PtrClassicFrameLayout
+        android:id="@+id/ptr_frame"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1">
     <ScrollView
         android:id="@+id/main_scrollview"
         android:layout_width="fill_parent"
@@ -31,4 +36,5 @@
             android:orientation="vertical" >
         </com.coursetable.TimeTableView>
     </ScrollView>
+    </in.srain.cube.views.ptr.PtrClassicFrameLayout>
 </LinearLayout>
