@@ -120,7 +120,10 @@ public class DB {
     public void updateBooks(Books books) {
         if (books!= null) {
             db.execSQL("update Books set code=?,name=?, author=? where person like ?",
-                    new String[]{books.getCode(),books.getName(),books.getAuthor(),"%"+books.getPerson()+"%"});
+                    new String[]{books.getCode(), books.getName(), books.getAuthor(), "%" + books.getPerson() + "%"});
         }
+    }
+    public void delete(){
+        db.execSQL("delete from Books");
     }
 }

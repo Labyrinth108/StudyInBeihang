@@ -27,6 +27,8 @@ import in.srain.cube.views.ptr.PtrFrameLayout;
 //自习fragment
 public class SearchRoomFragment extends Fragment{
     private View mParent;
+    SimpleAdapter adapter;
+    ListView lv;
     PtrClassicFrameLayout ptrFrame;
     private FragmentActivity mActivity;
     private TitleView mTitle;
@@ -54,26 +56,9 @@ public class SearchRoomFragment extends Fragment{
         View view = inflater.inflate(R.layout.fragment_searchroom, container, false);
 
         db=DB.getInstance(getActivity());
-        ptrFrame=(PtrClassicFrameLayout)view.findViewById(R.id.ptr_frame);
-        ptrFrame.setPtrHandler(new in.srain.cube.views.ptr.PtrHandler() {
-            @Override
-            public boolean checkCanDoRefresh(PtrFrameLayout frame, View content, View header) {
-                return PtrDefaultHandler.checkContentCanBePulledDown(frame, content, header);
-            }
 
-            @Override
-            public void onRefreshBegin(PtrFrameLayout frame){
-                frame.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                      //
-                        ptrFrame.refreshComplete();
-                    }
-                }, 1800);
-            }
-        });
-        ListView lv=(ListView)view.findViewById(R.id.lv);
-        SimpleAdapter adapter = new SimpleAdapter(this.getActivity(),getData(),R.layout.vlist,new String[]{"title","info","img"},
+        lv=(ListView)view.findViewById(R.id.lv);
+        adapter = new SimpleAdapter(this.getActivity(),getData(),R.layout.vlist,new String[]{"title","info","img"},
                 new int[]{R.id.title,R.id.useratio,R.id.img});
         lv.setAdapter(adapter);
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -97,6 +82,26 @@ public class SearchRoomFragment extends Fragment{
                 }
                 intent.putExtras(bundle);
                 getActivity().startActivity(intent);
+            }
+        });
+        ptrFrame=(PtrClassicFrameLayout)view.findViewById(R.id.ptr_frame);
+        ptrFrame.setPtrHandler(new in.srain.cube.views.ptr.PtrHandler() {
+            @Override
+            public boolean checkCanDoRefresh(PtrFrameLayout frame, View content, View header) {
+                return PtrDefaultHandler.checkContentCanBePulledDown(frame, content, header);
+            }
+
+            @Override
+            public void onRefreshBegin(PtrFrameLayout frame) {
+                frame.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        adapter = new SimpleAdapter(getContext(), getData(), R.layout.vlist, new String[]{"title", "info", "img"},
+                                new int[]{R.id.title, R.id.useratio, R.id.img});
+                        lv.setAdapter(adapter);
+                        ptrFrame.refreshComplete();
+                    }
+                }, 1800);
             }
         });
         return view;

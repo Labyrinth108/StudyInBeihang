@@ -62,7 +62,9 @@ public class RoomInfo extends Activity {
                 frame.postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        //
+                        addList();
+                        mTimaTableView.setTimeTable(mList);
+                        mTimaTableView.invalidate();
                         ptrFrame.refreshComplete();
                     }
                 }, 1800);

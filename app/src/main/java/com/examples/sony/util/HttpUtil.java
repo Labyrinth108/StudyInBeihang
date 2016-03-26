@@ -86,6 +86,7 @@ public class HttpUtil {
                     if(response == HttpURLConnection.HTTP_OK) {
                     InputStream inputStream = httpURLConnection.getInputStream();
                         if(needreturn){
+                            db.delete();
                             String returnresult=dealResponseResult(inputStream);                     //处理服务器的响应结果
                             getBookData(person,returnresult,db);
                         }
@@ -219,6 +220,7 @@ public class HttpUtil {
 //                        db.saveBooks(books);
 //                        Log.d("Long", "SaveBook implement");
 //                    }
+//                    db.delete();
                     db.saveBooks(books);
                 }
             }catch (Exception e){
