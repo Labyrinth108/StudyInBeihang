@@ -18,6 +18,8 @@ public class StudyInBeihangOpenHelper extends SQLiteOpenHelper{
             "room text,startnum integer,endnum integer)";
     public static final String CREATE_USERRATIO="create table UserRatio(id integer primary key autoincrement,location text,"+
             "density text)";
+    public static final String CREATE_BOOKS="create table Books(id integer primary key autoincrement,person text,"+
+            "code text,name text,author text)";
     public StudyInBeihangOpenHelper(Context context,String name,SQLiteDatabase.CursorFactory factory,int version){
         super(context,name,factory,version);
         mcontext=context;
@@ -28,6 +30,7 @@ public class StudyInBeihangOpenHelper extends SQLiteOpenHelper{
         db.execSQL(CREATE_CLASSROOM);
         db.execSQL(CREATE_COURSEINFO);
         db.execSQL(CREATE_USERRATIO);
+        db.execSQL(CREATE_BOOKS);
         Toast.makeText(mcontext, "Create succeed", Toast.LENGTH_SHORT).show();
     }
 

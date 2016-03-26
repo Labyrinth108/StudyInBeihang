@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.database.DB;
 import com.examples.sony.util.HttpUtil;
 
 import java.util.HashMap;
@@ -22,7 +23,8 @@ public class HelpActivity extends Activity {
 		requestWindowFeature(Window.FEATURE_NO_TITLE);	
 		setContentView(R.layout.feedback);
 
-		TitleView tv=(TitleView)findViewById(R.id.title);
+		final DB db=DB.getInstance(this);
+		final TitleView tv=(TitleView)findViewById(R.id.title);
 		tv.setTitle("反馈");
 		tv.setLeftButton("", new TitleView.OnLeftButtonClickListener() {
 			@Override
@@ -37,11 +39,11 @@ public class HelpActivity extends Activity {
 		bt.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
-				//String msg=info.getText().toString()+contact.getText().toString();
 				Map<String, String> params = new HashMap<String, String>();
 				params.put("content", info.getText().toString());
 				params.put("contact", contact.getText().toString());
-				HttpUtil.submitPostData(params, "utf-8");
+				String url="http://chaopengz.nat123.net:19870/feedback/";
+				HttpUtil.submitPostData("",db,params, url,"utf-8", false);
 				info.setText("");
 				contact.setText("");
 				Toast.makeText(HelpActivity.this,"感谢您的建议！",Toast.LENGTH_SHORT).show();

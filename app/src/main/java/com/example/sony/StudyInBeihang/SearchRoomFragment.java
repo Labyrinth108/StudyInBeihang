@@ -169,9 +169,6 @@ public class SearchRoomFragment extends Fragment{
                 goHelpActivity();
             }
         });
-
-        //mText = (TextView) mParent.findViewById(R.id.fragment_home_text);
-
     }
 
     private void goHelpActivity() {

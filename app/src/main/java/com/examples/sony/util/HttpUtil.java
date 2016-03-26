@@ -2,6 +2,7 @@ package com.examples.sony.util;
 import android.text.TextUtils;
 import android.util.Log;
 
+import com.database.Books;
 import com.database.Classroom;
 import com.database.Courseinfo;
 import com.database.DB;
@@ -59,14 +60,15 @@ public class HttpUtil {
             }
         }).start();
     }
-    public static void submitPostData(final Map<String, String> params, final String encode) {
+    public static void submitPostData(final String person,final DB db,final Map<String, String> params,final String address, final String encode, final boolean needreturn) {
+        final String content ="";
         new Thread(new Runnable() {
+
            @Override
            public void run() {
                try {
                    byte[] data = getRequestData(params, encode).toString().getBytes();//获得请求体
-                   Log.d("Long",data.toString());
-                   URL url=new URL("http://chaopengz.nat123.net:19870/feedback/");
+                   URL url=new URL(address);
                    HttpURLConnection httpURLConnection = (HttpURLConnection)url.openConnection();
                    httpURLConnection.setConnectTimeout(3000);       //设置连接超时时间
                    httpURLConnection.setDoInput(true);                  //打开输入流，以便从服务器获取数据
@@ -83,8 +85,10 @@ public class HttpUtil {
                    int response = httpURLConnection.getResponseCode();            //获得服务器的响应码
                     if(response == HttpURLConnection.HTTP_OK) {
                     InputStream inputStream = httpURLConnection.getInputStream();
-                    Log.d("Long", "Yeah!" + inputStream.toString());
-                  //Log.d("Longresponse",dealResponseResult(inputStream));                     //处理服务器的响应结果
+                        if(needreturn){
+                            String returnresult=dealResponseResult(inputStream);                     //处理服务器的响应结果
+                            getBookData(person,returnresult,db);
+                        }
                }
            } catch (IOException e) {
                 e.printStackTrace();
@@ -107,11 +111,6 @@ public class HttpUtil {
         }
         return stringBuffer;
     }
-    /*
-     * Function  :   处理服务器的响应结果（将输入流转化成字符串）
-     * Param     :   inputStream服务器的响应输入流
-     * Author    :   博客园-依旧淡然
-     */
     public static String dealResponseResult(InputStream inputStream) {
         String resultData = null;      //存储处理结果
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
@@ -154,7 +153,6 @@ public class HttpUtil {
                         ci.setEndnum(Integer.parseInt(num[1]));
                         ci.setRoom(jsonObject.getString("room"));
                         db.saveCourse(ci);
-                        Log.d("LongRunning", ci.getRoom() + ci.getWeek() + "Create");
                     }
                 }
                 return true;
@@ -204,6 +202,31 @@ public class HttpUtil {
             }
         }
     return false;
+    }
+    public static void getBookData(String person,String response,DB db){
+        if(!TextUtils.isEmpty(response)){
+            try{
+                JSONArray jsonArray=new JSONArray(response);
+                for(int i=0;i<jsonArray.length();i++){
+                    JSONObject jsonObject=jsonArray.getJSONObject(i);
+                    Books books=new Books(person,jsonObject.getString("code"),jsonObject.getString("name"),jsonObject.getString("author"));
+//                    if(db.loadBooks(person).moveToFirst())
+//                    {
+//                        db.updateBooks(books);
+//                        Log.d("Long","Update implemented");
+//                    }
+//                    else{
+//                        db.saveBooks(books);
+//                        Log.d("Long", "SaveBook implement");
+//                    }
+                    db.saveBooks(books);
+                }
+            }catch (Exception e){
+                e.printStackTrace();
+            }finally{
+
+            }
+        }
     }
     public static boolean getDensityData(DB db, String response,boolean First){
         if(!TextUtils.isEmpty(response)){

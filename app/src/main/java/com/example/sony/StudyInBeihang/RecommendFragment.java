@@ -9,8 +9,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
+import com.database.DB;
 import com.example.sony.StudyInBeihang.TitleView.OnLeftButtonClickListener;
+import com.examples.sony.util.HttpUtil;
+
+import java.util.HashMap;
+import java.util.Map;
+
 //荐书fragment
 public class RecommendFragment extends Fragment {
 
@@ -57,12 +64,28 @@ public class RecommendFragment extends Fragment {
 		keyword=(EditText)mParent.findViewById(R.id.password);
 		mTitle = (TitleView) mParent.findViewById(R.id.title);
 		mTitle.setTitle(R.string.title_recommend);
-
+		final DB db=DB.getInstance(getActivity());
 		Button button=(Button)mActivity.findViewById(R.id.button);
 		button.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
+				final String username=name.getText().toString();
+				final String key=keyword.getText().toString();
+				if(username==""|key==""){
+					Toast.makeText(getActivity(),"请填写完整",Toast.LENGTH_LONG).show();
+					return;
+				}
+				Map<String, String> params = new HashMap<String, String>();
+				params.put("username", username);
+				params.put("password", key);
+				String url="http://vpn.iliana.wang/recommend/";
+				HttpUtil.submitPostData(username,db,params,url,"utf-8",true);
+
 				Intent intent=new Intent(mActivity,BooksInfo.class);
+				Bundle info=new Bundle();
+				info.putString("username",username);
+				info.putString("password",key);
+				intent.putExtras(info);
 				startActivity(intent);
 			}
 		});

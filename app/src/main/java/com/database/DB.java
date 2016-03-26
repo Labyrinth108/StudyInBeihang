@@ -97,5 +97,30 @@ public class DB {
         }
         return "";
     }
-
+    public  Cursor loadBooks(String person){
+        Cursor cursor=db.rawQuery("select * from Books where person like ?",new String[]{"%"+person+"%"});
+        if(cursor.moveToFirst()) {
+            return cursor;
+        }
+        if(cursor!=null){
+            cursor.close();
+        }
+        return null;
+    }
+    public void saveBooks(Books books) {
+        if (books != null) {
+            ContentValues values=new ContentValues();
+            values.put("person",books.getPerson());
+            values.put("code", books.getCode());
+            values.put("name",books.getName());
+            values.put("author",books.getAuthor());
+            db.insert("Books", null, values);
+        }
+    }
+    public void updateBooks(Books books) {
+        if (books!= null) {
+            db.execSQL("update Books set code=?,name=?, author=? where person like ?",
+                    new String[]{books.getCode(),books.getName(),books.getAuthor(),"%"+books.getPerson()+"%"});
+        }
+    }
 }
