@@ -35,6 +35,7 @@ public class RoomInfo extends Activity {
     private List<TimeTableModel> mList;
     private String building;
     private int room;
+    private int times;
     PtrClassicFrameLayout ptrFrame;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,6 +45,7 @@ public class RoomInfo extends Activity {
         float percent = bundle.getFloat("Percent");
         room=bundle.getInt("Classroom");
         building=bundle.getString("Building");
+        times=1;
 
         mList = new ArrayList<TimeTableModel>();
         mTimaTableView = (TimeTableView) findViewById(R.id.main_timetable_ly);
@@ -62,6 +64,7 @@ public class RoomInfo extends Activity {
                 frame.postDelayed(new Runnable() {
                     @Override
                     public void run() {
+                        times=2;
                         addList();
                         mTimaTableView.setTimeTable(mList);
                         mTimaTableView.invalidate();
@@ -141,8 +144,12 @@ public class RoomInfo extends Activity {
         DB db=DB.getInstance(RoomInfo.this);
         Cursor c=db.loadCourseInfo(building+"-"+room);
         int k=0;
-        if(c==null){
-            Toast.makeText(this,"请联网后使用！",Toast.LENGTH_LONG).show();
+        if(c==null&&times==2){
+            Toast.makeText(this,"该教室没课",Toast.LENGTH_LONG).show();
+            return;
+        }
+        if(c==null&&times==1){
+            Toast.makeText(this,"请联网刷新后使用",Toast.LENGTH_LONG).show();
             return;
         }
         while(c.moveToNext()){

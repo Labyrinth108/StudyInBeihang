@@ -13,6 +13,7 @@ import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.Window;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -80,19 +81,12 @@ public class details extends FragmentActivity{
         findById();
         init();
         initTabLineWidth();
-
-//        mTitle.setRightButton(R.string.rooms, new TitleView.OnRightButtonClickListener() {
-//            @Override
-//            public void onClick(View button) {
-//
-//            }
-//        });
-//        mTitle.setLeftButton(R.string.back, new TitleView.OnLeftButtonClickListener() {
-//            @Override
-//            public void onClick(View button) {
-//
-//            }
-//        });
+        mTitle.setLeftButton("", new TitleView.OnLeftButtonClickListener() {
+            @Override
+            public void onClick(View button) {
+                finish();
+            }
+        });
     }
 
     private void findById() {
@@ -226,24 +220,6 @@ public class details extends FragmentActivity{
     private float queryClassroom(String location,String room){
         DB db=new DB(details.this);
         String p=db.loadClassroom(location,room);
-//        if(p=="")
-//        {
-//            new AlertDialog.Builder(details.this)
-//                    .setIcon(R.drawable.internet)
-//                    .setTitle("请您连接网络")
-//                    .setPositiveButton("确定",
-//                            new DialogInterface.OnClickListener() {
-//                                @Override
-//                                public void onClick(DialogInterface dialog,
-//                                                    int which) {
-//                                    Intent intent=new Intent(details.this,LongRunningService.class);
-//                                    startActivity(intent);
-//                                    // TODO Auto-generated method stub
-//
-//                                }
-//                            }).setNegativeButton("取消", null).create()
-//                    .show();
-//        }
         return Float.parseFloat(p);
     }
     @Override

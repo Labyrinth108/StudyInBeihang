@@ -6,7 +6,7 @@
     android:orientation="horizontal" >
     <Button
         android:id="@+id/left_btn"
-        style="@style/Text.Title_Button"
+        style="@style/Text.Title"
         android:layout_width="wrap_content"
         android:layout_height="35dip"
         android:layout_gravity="center_vertical"
@@ -23,7 +23,7 @@
 
     <Button
         android:id="@+id/right_btn"
-        style="@style/Text.Title_Button"
+        style="@style/Text.Title"
         android:layout_width="wrap_content"
         android:layout_height="35dip"
         android:layout_gravity="center_vertical"

@@ -11,7 +11,6 @@ import android.view.View.OnClickListener;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
 public class FragmentIndicator extends LinearLayout implements OnClickListener {
 
     private int mDefaultIndicator = 0;
@@ -55,8 +54,10 @@ public class FragmentIndicator extends LinearLayout implements OnClickListener {
 
         ImageView iconView = new ImageView(getContext());
         iconView.setTag(iconTag);
-        iconView.setLayoutParams(new LinearLayout.LayoutParams(
-                LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT, 1));
+        LinearLayout.LayoutParams l=new LinearLayout.LayoutParams(
+                LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT, 1);
+        l.setMargins(0,3,0,0);
+        iconView.setLayoutParams(l);
         iconView.setImageResource(iconResID);
 
         TextView textView = new TextView(getContext());
@@ -78,7 +79,6 @@ public class FragmentIndicator extends LinearLayout implements OnClickListener {
         mIndicators = new View[3];
         mIndicators[0] = createIndicator(R.drawable.search_select,
                 R.string.tab_searchroom, COLOR_SELECT, TAG_ICON_0, TAG_TEXT_0);
-       // mIndicators[0].setBackgroundResource(R.drawable.indic_select);//选中的颜色
         mIndicators[0].setTag(Integer.valueOf(0));
         mIndicators[0].setOnClickListener(this);
         addView(mIndicators[0]);
@@ -122,9 +122,6 @@ public class FragmentIndicator extends LinearLayout implements OnClickListener {
                 prevText.setTextColor(COLOR_UNSELECT);
                 break;
         }
-
-        // update current status.
-        //mIndicators[which].setBackgroundResource(R.drawable.indic_select);
         ImageView currIcon;
         TextView currText;
         switch(which) {
