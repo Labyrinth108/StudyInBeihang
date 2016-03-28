@@ -24,7 +24,7 @@
         android:layout_width="match_parent"
         android:layout_height="48dp"
         android:ems="10"
-        android:id="@+id/name"
+        android:id="@+id/username"
         android:hint="用户名"
         android:textColor="#ff333333"
         android:textSize="18.0sp"
@@ -32,7 +32,18 @@
         android:layout_below="@+id/imageView"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="51dp" />
-
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:ems="10"
+        android:id="@+id/name"
+        android:hint="姓名"
+        android:textColor="#ff333333"
+        android:textSize="18.0sp"
+        android:background="@drawable/setting_edit"
+        android:layout_below="@+id/imageView"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="8dp" />
     <EditText
         android:layout_width="match_parent"
         android:layout_height="48dp"
@@ -40,15 +51,10 @@
         android:ems="10"
         android:textColor="#ff333333"
         android:textSize="18.0sp"
+        android:layout_marginTop="8dp"
         android:background="@drawable/setting_edit"
         android:id="@+id/password"
-        android:hint="密码"
-        android:layout_marginTop="10dp"
-        android:layout_centerVertical="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        android:hint="密码"/>
 
     <Button
         android:layout_width="match_parent"

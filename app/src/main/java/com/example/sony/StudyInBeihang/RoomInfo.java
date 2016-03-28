@@ -39,48 +39,62 @@ public class RoomInfo extends Activity {
     PtrClassicFrameLayout ptrFrame;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.roominfo);
         Intent intent = this.getIntent();        //获取已有的intent对象
         Bundle bundle = intent.getExtras();    //获取intent里面的bundle对象
         float percent = bundle.getFloat("Percent");
         room=bundle.getInt("Classroom");
         building=bundle.getString("Building");
-        times=1;
-
-        mList = new ArrayList<TimeTableModel>();
-        mTimaTableView = (TimeTableView) findViewById(R.id.main_timetable_ly);
-        addList();
-        mTimaTableView.setTimeTable(mList);
-
-        ptrFrame=(PtrClassicFrameLayout)findViewById(R.id.ptr_frame);
-        ptrFrame.setPtrHandler(new in.srain.cube.views.ptr.PtrHandler() {
-            @Override
-            public boolean checkCanDoRefresh(PtrFrameLayout frame, View content, View header) {
-                return PtrDefaultHandler.checkContentCanBePulledDown(frame, content, header);
-            }
-
-            @Override
-            public void onRefreshBegin(PtrFrameLayout frame) {
-                frame.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        times=2;
-                        addList();
-                        mTimaTableView.setTimeTable(mList);
-                        mTimaTableView.invalidate();
-                        ptrFrame.refreshComplete();
-                    }
-                }, 1800);
-            }
-        });
         String buildingtext="";
-            switch (building){
+        switch (building){
             case "NMB": buildingtext="新主楼";break;
             case "ZhuM":buildingtext="主M";break;
             case "J3":buildingtext="教三";break;
             case "J4":buildingtext="教四";break;
             case "J5":buildingtext="教五";break;
+            case "ShaheLib":buildingtext="沙河校区图书馆";break;
+            case "XYLib":buildingtext="学院路图书馆";break;
+            default:break;
         }
+
+        if(buildingtext=="沙河校区图书馆"|buildingtext=="学院路图书馆"){
+            setContentView(R.layout.library);
+        }
+        else
+        {
+            setContentView(R.layout.roominfo);
+
+            times=1;
+
+            mList = new ArrayList<TimeTableModel>();
+            mTimaTableView = (TimeTableView) findViewById(R.id.main_timetable_ly);
+            addList();
+            mTimaTableView.setTimeTable(mList);
+
+            ptrFrame=(PtrClassicFrameLayout)findViewById(R.id.ptr_frame);
+            ptrFrame.setPtrHandler(new in.srain.cube.views.ptr.PtrHandler() {
+                @Override
+                public boolean checkCanDoRefresh(PtrFrameLayout frame, View content, View header) {
+                    return PtrDefaultHandler.checkContentCanBePulledDown(frame, content, header);
+                }
+
+                @Override
+                public void onRefreshBegin(PtrFrameLayout frame) {
+                    frame.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            times=2;
+                            addList();
+                            mTimaTableView.setTimeTable(mList);
+                            mTimaTableView.invalidate();
+                            ptrFrame.refreshComplete();
+                        }
+                    }, 1800);
+                }
+            });
+        }
+
+
+
         TitleView tv=(TitleView)findViewById(R.id.title);
         tv.setTitle(buildingtext+room+"室");
         tv.setLeftButton("", new TitleView.OnLeftButtonClickListener() {
@@ -127,8 +141,6 @@ public class RoomInfo extends Activity {
         // 饼图颜色
         colors.add(ColorTemplate.VORDIPLOM_COLORS[2]);
         colors.add(ColorTemplate.VORDIPLOM_COLORS[4]);
-//        colors.add(ColorTemplate.JOYFUL_COLORS[1]);
-//        colors.add(ColorTemplate.JOYFUL_COLORS[4]);
         pieDataSet.setColors(colors);
 
         PieData pieData = new PieData(xVals, pieDataSet);

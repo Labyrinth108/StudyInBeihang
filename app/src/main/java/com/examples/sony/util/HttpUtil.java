@@ -47,6 +47,9 @@ public class HttpUtil {
                     String line;
                     while((line=reader.readLine())!=null)
                       response.append(line);
+                    if(TextUtils.isEmpty(response)) {
+                        Log.d("Long",address);
+                    }
                    if(listener!=null){
                        listener.onFinish(response.toString());
                    }
@@ -180,8 +183,8 @@ public class HttpUtil {
                         case "教三":location="J3";break;
                         case "教四":location="J4";break;
                         case "教五":location="J5";break;
-                        case "学院图书馆":location="XYLib";break;
-                        case "沙河图书馆":location="SheheLib";break;
+                        case "学院路图书馆":location="XYLib";break;
+                        case "沙河校区图书馆":location="ShaheLib";break;
                         default:break;
                     }
                     cr.setLocation(location);
@@ -201,7 +204,7 @@ public class HttpUtil {
             }finally{
 
             }
-        }
+        }//Log.d("Long","Result si nu,l");
     return false;
     }
     public static void getBookData(String person,String response,DB db){
@@ -245,7 +248,7 @@ public class HttpUtil {
                         case "教四":location="J4";break;
                         case "教五":location="J5";break;
                         case "学院路图书馆":location="XYLib";break;
-                        case "沙河校区图书馆":location="SheheLib";break;
+                        case "沙河校区图书馆":location="ShaheLib";break;
                         default:break;
                     }
                     UserRatio ur=new UserRatio(location,jsonObject.getString("density"));

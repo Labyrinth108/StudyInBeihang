@@ -24,6 +24,7 @@ public class RecommendFragment extends Fragment {
 	private View mParent;
 	private FragmentActivity mActivity;
 	private EditText name;
+	private EditText realname;
 	private EditText keyword;
 	private Button button;
 	private TitleView mTitle;
@@ -60,7 +61,8 @@ public class RecommendFragment extends Fragment {
 		super.onActivityCreated(savedInstanceState);
 		mParent = getView();
 		mActivity = getActivity();
-		name=(EditText)mParent.findViewById(R.id.name);
+		name=(EditText)mParent.findViewById(R.id.username);
+		realname=(EditText)mParent.findViewById(R.id.name);
 		keyword=(EditText)mParent.findViewById(R.id.password);
 		mTitle = (TitleView) mParent.findViewById(R.id.title);
 		mTitle.setTitle(R.string.title_recommend);
@@ -71,12 +73,14 @@ public class RecommendFragment extends Fragment {
 			public void onClick(View view) {
 				final String username=name.getText().toString();
 				final String key=keyword.getText().toString();
+				final String name=realname.getText().toString();
 				if(username==""|key==""){
 					Toast.makeText(getActivity(),"请填写完整",Toast.LENGTH_LONG).show();
 					return;
 				}
 				Map<String, String> params = new HashMap<String, String>();
 				params.put("username", username);
+				params.put("name",name);
 				params.put("password", key);
 				String url="http://vpn.iliana.wang/recommend/";
 				HttpUtil.submitPostData(username,db,params,url,"utf-8",true);
@@ -84,6 +88,7 @@ public class RecommendFragment extends Fragment {
 				Intent intent=new Intent(mActivity,BooksInfo.class);
 				Bundle info=new Bundle();
 				info.putString("username",username);
+				info.putString("name",name);
 				info.putString("password",key);
 				intent.putExtras(info);
 				startActivity(intent);

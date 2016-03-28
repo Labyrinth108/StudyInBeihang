@@ -33,7 +33,7 @@ import java.net.URLEncoder;
 public class LongRunningService extends Service {
     private static DB db;
     private boolean first=false;
-    private String[] buildings={"新主楼","教三","教四","教五","主M"};
+    private String[] buildings={"新主楼","教三","教四","教五","主M","沙河校区图书馆","学院路图书馆"};
     @Nullable
     @Override
     public IBinder onBind(Intent intent) {
@@ -120,11 +120,12 @@ public class LongRunningService extends Service {
                 @Override
                 public void onFinish(final String response) {
                     boolean result = false;
+                    Log.d("Long",location+"Response"+response);
                     result = HttpUtil.parseJSONWithJSONObject(db, response, First);
                     if (result) {
                         Log.d("LongRunning", location + "ok");
                     } else {
-
+                        Log.d("Long","WRONG");
                     }
                 }
             @Override

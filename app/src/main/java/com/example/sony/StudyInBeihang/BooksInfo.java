@@ -30,6 +30,7 @@ import in.srain.cube.views.ptr.PtrFrameLayout;
 public class BooksInfo extends Activity {
     private String username;
     private String password;
+    private String name;
     SimpleAdapter adapter;
     PtrClassicFrameLayout ptrFrame;
     private Context context;
@@ -41,9 +42,9 @@ public class BooksInfo extends Activity {
         Bundle bundle=getIntent().getExtras();
         username=bundle.getString("username");
         password=bundle.getString("password");
-
+        name=bundle.getString("name");
         TitleView tv=(TitleView)findViewById(R.id.title);
-        tv.setTitle(username+"的推荐信息");
+        tv.setTitle(username+name+"的推荐信息");
         tv.setLeftButton("", new TitleView.OnLeftButtonClickListener() {
             @Override
             public void onClick(View button) {
@@ -54,7 +55,7 @@ public class BooksInfo extends Activity {
 
         List<Map<String, Object>> s=getData(username);
         if(s==null)
-            Toast.makeText(this, "请联网后使用！", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "请刷新后使用！", Toast.LENGTH_LONG).show();
         else
         {
             adapter = new SimpleAdapter(this,getData(username),R.layout.vbook,new String[]{"code","title","author"},
