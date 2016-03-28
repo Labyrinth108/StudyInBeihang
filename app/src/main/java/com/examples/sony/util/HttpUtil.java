@@ -204,7 +204,7 @@ public class HttpUtil {
             }finally{
 
             }
-        }//Log.d("Long","Result si nu,l");
+        }
     return false;
     }
     public static void getBookData(String person,String response,DB db){
@@ -214,16 +214,6 @@ public class HttpUtil {
                 for(int i=0;i<jsonArray.length();i++){
                     JSONObject jsonObject=jsonArray.getJSONObject(i);
                     Books books=new Books(person,jsonObject.getString("code"),jsonObject.getString("name"),jsonObject.getString("author"));
-//                    if(db.loadBooks(person).moveToFirst())
-//                    {
-//                        db.updateBooks(books);
-//                        Log.d("Long","Update implemented");
-//                    }
-//                    else{
-//                        db.saveBooks(books);
-//                        Log.d("Long", "SaveBook implement");
-//                    }
-//                    db.delete();
                     db.saveBooks(books);
                 }
             }catch (Exception e){

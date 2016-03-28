@@ -44,7 +44,7 @@ public class BooksInfo extends Activity {
         password=bundle.getString("password");
         name=bundle.getString("name");
         TitleView tv=(TitleView)findViewById(R.id.title);
-        tv.setTitle(username+name+"的推荐信息");
+        tv.setTitle(username+"的推荐信息");
         tv.setLeftButton("", new TitleView.OnLeftButtonClickListener() {
             @Override
             public void onClick(View button) {
